@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monbá QR - Guía Turística</title>
+    <!-- Iconos y Librería para generar QR -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <style>
+        :root {
+            --color-primario: #0077b6;
+            --color-secundario: #00b4d8;
+            --color-arena: #fefae0;
+            --color-texto: #333333;
+            --color-blanco: #ffffff;
+            --color-gris: #f4f4f4;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--color-gris); color: var(--color-texto); overflow-x: hidden; }
+
+        /* Encabezado con Botón de Menú */
+        header {
+            background-color: var(--color-primario); color: var(--color-blanco);
+            padding: 15px 20px; display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .header-izq { display: flex; align-items: center; gap: 15px; }
+        .btn-menu { background: none; border: none; color: white; font-size: 1.3rem; cursor: pointer; }
+        header h1 { font-size: 1.2rem; }
+
+        main { padding-bottom: 30px; }
+
+        .hero-imagen { width: 100%; height: 250px; background-size: cover; background-position: center; position: relative; }
+        .hero-gradiente { position: absolute; bottom: 0; width: 100%; height: 50%; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); display: flex; align-items: flex-end; padding: 20px; }
+        .hero-titulo { color: var(--color-blanco); font-size: 1.8rem; }
+
+        .seccion { background-color: var(--color-blanco); margin: 15px; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .seccion h2 { font-size: 1.1rem; color: var(--color-primario); margin-bottom: 10px; border-bottom: 2px solid var(--color-arena); padding-bottom: 5px; }
+        .descripcion { font-size: 0.95rem; line-height: 1.5; color: #555; }
+
+        .servicios-contenedor { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+        .etiqueta { background-color: var(--color-secundario); color: var(--color-blanco); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
+
+        .directorio-item { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee; }
+        .directorio-item:last-child { border-bottom: none; }
+        .icono-directorio { background-color: var(--color-arena); color: var(--color-primario); width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-right: 15px; font-size: 1.2rem; }
+        .info-directorio h3 { font-size: 1rem; color: var(--color-texto); }
+        .info-directorio p { font-size: 0.8rem; color: #777; }
+
+        /* Botones de Acción */
+        .botones-accion { display: flex; gap: 10px; padding: 0 15px; margin-top: 15px; }
+        .btn { flex: 1; text-align: center; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        .btn-mapa { background-color: #28a745; color: white; }
+        .btn-compartir { background-color: var(--color-primario); color: white; }
+        .btn-qr { background-color: var(--color-texto); color: white; }
+
+        /* Modal del QR */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); z-index: 200; justify-content: center; align-items: center; }
+        .modal-contenido { background-color: white; padding: 30px; border-radius: 12px; text-align: center; width: 80%; max-width: 300px; }
+        #codigo-qr { margin: 20px auto; display: flex; justify-content: center; }
+        .btn-cerrar { background-color: #dc3545; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-top: 15px; width: 100%; font-weight: bold; }
+
+        #mensaje-estado { text-align: center; padding: 50px 20px; color: #666; font-size: 1.1rem; }
+
+        /* --- NUEVO: BANDEJA LATERAL (TRAY) --- */
+        .bandeja-lateral {
+            position: fixed; top: 0; left: -100%; width: 85%; max-width: 320px; height: 100%;
+            background-color: var(--color-blanco); z-index: 300;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.2); transition: left 0.3s ease;
+            display: flex; flex-direction: column;
+        }
+        .bandeja-lateral.abierta { left: 0; }
+        .bandeja-header {
+            background-color: var(--color-primario); color: white; padding: 20px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .bandeja-header h2 { font-size: 1.2rem; }
+        .btn-cerrar-bandeja { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+        .bandeja-contenido { padding: 10px 15px; overflow-y: auto; flex: 1; }
+        
+        .item-playa {
+            display: flex; align-items: center; gap: 15px; padding: 12px 0;
+            border-bottom: 1px solid #eee; text-decoration: none; color: var(--color-texto);
+        }
+        .item-playa img { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; }
+        .item-playa h4 { font-size: 1rem; margin-bottom: 3px; }
+        .item-playa p { font-size: 0.8rem; color: #666; }
+
+        .overlay-bandeja {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 250;
+        }
+        .overlay-bandeja.activo { display: block; }
+    </style>
+</head>
+<body>
+
+    <!-- Encabezado con el nuevo botón de menú -->
+    <header>
+        <div class="header-izq">
+            <button class="btn-menu" onclick="abrirBandeja()"><i class="fa-solid fa-bars-staggered"></i></button>
+            <h1><i class="fa-solid fa-qrcode"></i> Monbá QR</h1>
+        </div>
+    </header>
+
+    <!-- Bandeja Lateral para ver playas cercanas -->
+    <div id="overlay" class="overlay-bandeja" onclick="cerrarBandeja()"></div>
+    <div id="bandeja" class="bandeja-lateral">
+        <div class="bandeja-header">
+            <h2>Destinos Cercanos</h2>
+            <button class="btn-cerrar-bandeja" onclick="cerrarBandeja()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="bandeja-contenido" id="lista-destinos">
+            <!-- Los destinos se inyectan aquí con JavaScript -->
+        </div>
+    </div>
+
+    <main id="app-contenido">
+        <div id="mensaje-estado">
+            <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
+            <p style="margin-top: 15px;">Escaneando información...</p>
+        </div>
+    </main>
+
+    <!-- Ventana Modal para el QR -->
+    <div id="modal-qr" class="modal">
+        <div class="modal-contenido">
+            <h3>QR de esta Playa</h3>
+            <p style="font-size: 0.8rem; color: #666; margin-top: 5px;">Escanea para ver la info</p>
+            <div id="codigo-qr"></div>
+            <button class="btn-cerrar" onclick="cerrarModal()">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        // --- BASE DE DATOS MOCK CON CHIRIMENA AÑADIDA ---
+        const firebaseMock = {
+            "los-totumos": {
+                nombre: "Playa Los Totumos",
+                imagen: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                descripcion: "Hermosa bahía de aguas cristalinas y oleaje muy suave. Es el destino perfecto para viajes familiares debido a su poca profundidad y arena fina.",
+                oleaje: "Muy Suave (Familiar)",
+                servicios: ["Toldos", "Baños", "Estacionamiento", "Seguridad"],
+                directorio: [
+                    { nombre: "Empanadas La Negra", tipo: "Gastronomía", icono: "fa-utensils" },
+                    { nombre: "Asociación de Toldos", tipo: "Servicios", icono: "fa-umbrella-beach" },
+                    { nombre: "Paseos en Lancha 'El Pez'", tipo: "Recreación", icono: "fa-ship" }
+                ],
+                mapaUrl: "https://maps.google.com/?q=Los+Totumos+Miranda+Venezuela"
+            },
+            "puerto-frances": {
+                nombre: "Puerto Francés",
+                imagen: "https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                descripcion: "Playa oceánica de arena dorada, rodeada de montañas. Con un oleaje un poco más fuerte, ideal para desconectarse y disfrutar del ambiente de la costa.",
+                oleaje: "Moderado",
+                servicios: ["Restaurantes", "Alquiler de Toldos", "Salvavidas"],
+                directorio: [
+                    { nombre: "Restaurante El Marisco", tipo: "Gastronomía", icono: "fa-utensils" },
+                    { nombre: "Posada Brisas del Mar", tipo: "Alojamiento", icono: "fa-bed" }
+                ],
+                mapaUrl: "https://maps.google.com/?q=Puerto+Frances+Miranda+Venezuela"
+            },
+            "chirimena": {
+                nombre: "Playa Chirimena",
+                imagen: "https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                descripcion: "Famosa por sus aguas cristalinas, formaciones rocosas y el sonido inconfundible del tambor barloventeño. Excelente para surfistas y amantes de la cultura local.",
+                oleaje: "Moderado a Fuerte (Surf)",
+                servicios: ["Restaurantes", "Estacionamiento", "Posadas Cercanas", "Alquiler de Tablas"],
+                directorio: [
+                    { nombre: "Parador Turístico El Tambor", tipo: "Gastronomía y Cultura", icono: "fa-music" },
+                    { nombre: "Club de Surf Chirimena", tipo: "Recreación", icono: "fa-water" },
+                    { nombre: "Posada Vista al Mar", tipo: "Alojamiento", icono: "fa-house" }
+                ],
+                mapaUrl: "https://maps.google.com/?q=Chirimena+Miranda+Venezuela"
+            }
+        };
+
+        let datosActuales = null;
+
+        function obtenerParametroURL(nombre) {
+            return new URLSearchParams(window.location.search).get(nombre);
+        }
+
+        // Lógica de renderizado principal
+        function cargarPlaya() {
+            const idPlaya = obtenerParametroURL('id') || 'los-totumos';
+            datosActuales = firebaseMock[idPlaya];
+            const contenedor = document.getElementById('app-contenido');
+
+            if (datosActuales) {
+                renderizarInterfaz(datosActuales, contenedor);
+                cargarDestinosEnBandeja(idPlaya); // Cargar el menú lateral
+            } else {
+                contenedor.innerHTML = `<div id="mensaje-estado">Error: Playa no encontrada.</div>`;
+            }
+        }
+
+        function renderizarInterfaz(datos, contenedor) {
+            let serviciosHTML = datos.servicios.map(s => `<span class="etiqueta"><i class="fa-solid fa-check"></i> ${s}</span>`).join('');
+            let directorioHTML = datos.directorio.map(item => `
+                <div class="directorio-item">
+                    <div class="icono-directorio"><i class="fa-solid ${item.icono}"></i></div>
+                    <div class="info-directorio">
+                        <h3>${item.nombre}</h3><p>${item.tipo}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            contenedor.innerHTML = `
+                <div class="hero-imagen" style="background-image: url('${datos.imagen}');">
+                    <div class="hero-gradiente"><h2 class="hero-titulo">${datos.nombre}</h2></div>
+                </div>
+
+                <div class="seccion">
+                    <h2><i class="fa-solid fa-circle-info"></i> Información</h2>
+                    <p class="descripcion">${datos.descripcion}</p>
+                    <div style="margin-top: 15px;"><strong>Condición del mar:</strong> ${datos.oleaje}</div>
+                </div>
+
+                <div class="seccion">
+                    <h2><i class="fa-solid fa-list-check"></i> Servicios</h2>
+                    <div class="servicios-contenedor">${serviciosHTML}</div>
+                </div>
+
+                <div class="seccion">
+                    <h2><i class="fa-solid fa-store"></i> Comercios Locales</h2>
+                    ${directorioHTML}
+                </div>
+
+                <div class="botones-accion">
+                    <a href="${datos.mapaUrl}" target="_blank" class="btn btn-mapa"><i class="fa-solid fa-map-location-dot"></i> Ruta</a>
+                    <button onclick="compartirNativo()" class="btn btn-compartir"><i class="fa-solid fa-share-nodes"></i> Compartir</button>
+                    <button onclick="mostrarQR()" class="btn btn-qr"><i class="fa-solid fa-qrcode"></i> QR</button>
+                </div>
+            `;
+        }
+
+        // --- LÓGICA DE LA BANDEJA (MENÚ LATERAL) ---
+        function abrirBandeja() {
+            document.getElementById('bandeja').classList.add('abierta');
+            document.getElementById('overlay').classList.add('activo');
+        }
+
+        function cerrarBandeja() {
+            document.getElementById('bandeja').classList.remove('abierta');
+            document.getElementById('overlay').classList.remove('activo');
+        }
+
+        function cargarDestinosEnBandeja(playaActual) {
+            const contenedorLista = document.getElementById('lista-destinos');
+            let htmlLista = '';
+
+            for (const id in firebaseMock) {
+                // No mostrar la playa en la que ya estamos navegando
+                if (id !== playaActual) {
+                    const playa = firebaseMock[id];
+                    htmlLista += `
+                        <a href="?id=${id}" class="item-playa">
+                            <img src="${playa.imagen}" alt="${playa.nombre}">
+                            <div>
+                                <h4>${playa.nombre}</h4>
+                                <p><i class="fa-solid fa-water"></i> ${playa.oleaje.split(' ')[0]}</p>
+                            </div>
+                        </a>
+                    `;
+                }
+            }
+            contenedorLista.innerHTML = htmlLista;
+        }
+
+        // Lógica para Compartir
+        function compartirNativo() {
+            if (navigator.share) {
+                navigator.share({
+                    title: datosActuales.nombre + ' - Monbá QR',
+                    text: 'Conoce los servicios y la historia de ' + datosActuales.nombre + ' escaneando su QR turístico.',
+                    url: window.location.href
+                }).catch(console.error);
+            } else {
+                alert("Tu navegador no soporta la función de compartir nativa. ¡Copia el enlace!");
+            }
+        }
+
+        // Lógica para QR
+        function mostrarQR() {
+            const contenedorQR = document.getElementById("codigo-qr");
+            contenedorQR.innerHTML = ""; 
+            new QRCode(contenedorQR, {
+                text: window.location.href,
+                width: 150, height: 150, colorDark : "#000000", colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.H
+            });
+            document.getElementById("modal-qr").style.display = "flex";
+        }
+
+        function cerrarModal() {
+            document.getElementById("modal-qr").style.display = "none";
+        }
+
+        document.addEventListener("DOMContentLoaded", cargarPlaya);
+    </script>
+</body>
+</html>
