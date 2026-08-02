@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monbá QR - Directorio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --color-primario: #0077b6;
+            --color-secundario: #00b4d8;
+            --color-arena: #fefae0;
+            --color-texto: #333333;
+            --color-blanco: #ffffff;
+            --color-gris: #f4f4f4;
+            --color-exito: #25D366;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--color-gris); color: var(--color-texto); overflow-x: hidden; }
+
+        /* =========================================
+           ENCABEZADO
+           ========================================= */
+        header {
+            background-color: var(--color-primario); color: var(--color-blanco);
+            padding: 15px 20px; display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .btn-volver { color: white; text-decoration: none; font-size: 1.2rem; cursor: pointer; border: none; background: none;}
+        header h1 { font-size: 1.2rem; margin: 0 auto; padding-right: 15px;}
+
+        /* =========================================
+           CARRUSEL MANUAL DE IMÁGENES
+           ========================================= */
+        .carrusel-contenedor {
+            position: relative;
+            width: 100%;
+            height: 35vh;
+            background-color: #ddd;
+        }
+        
+        .carrusel-slides {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            height: 100%;
+            -webkit-overflow-scrolling: touch;
+        }
+        /* Ocultar barra de scroll */
+        .carrusel-slides::-webkit-scrollbar { display: none; }
+        .carrusel-slides { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .slide {
+            flex: 0 0 100%;
+            height: 100%;
+            scroll-snap-align: start;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Botones de control manual */
+        .btn-carrusel {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 10;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .btn-prev { left: 10px; }
+        .btn-next { right: 10px; }
+
+        /* =========================================
+           INFORMACIÓN Y SERVICIOS
+           ========================================= */
+        .info-seccion {
+            background-color: var(--color-blanco);
+            padding: 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .info-seccion h2 { color: var(--color-primario); font-size: 1.5rem; margin-bottom: 5px; }
+        .ubicacion { color: #777; font-size: 0.9rem; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; }
+        .descripcion { font-size: 0.95rem; line-height: 1.6; text-align: justify; margin-bottom: 15px; }
+
+        .servicios-tags {
+            display: flex; flex-wrap: wrap; gap: 8px;
+        }
+        .tag {
+            background-color: var(--color-arena);
+            color: var(--color-primario);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: flex; align-items: center; gap: 5px;
+            border: 1px solid #e9e5c4;
+        }
+
+        /* =========================================
+           DIRECTORIO DE COMERCIOS (MENÚ/PRECIOS)
+           ========================================= */
+        .directorio-seccion {
+            padding: 20px 15px;
+        }
+        .directorio-seccion h3 {
+            font-size: 1.2rem; margin-bottom: 15px; color: var(--color-texto);
+            border-bottom: 2px solid var(--color-primario); padding-bottom: 5px; display: inline-block;
+        }
+
+        .tarjeta-comercio {
+            background-color: var(--color-blanco);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+            border-left: 4px solid var(--color-secundario);
+        }
+        .comercio-header {
+            display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;
+        }
+        .comercio-nombre { font-size: 1.1rem; font-weight: bold; color: var(--color-primario); }
+        .comercio-precio { background-color: #e8f5e9; color: #2e7d32; padding: 4px 8px; border-radius: 6px; font-weight: bold; font-size: 0.9rem;}
+        
+        .comercio-desc { font-size: 0.9rem; color: #555; margin-bottom: 12px; }
+        
+        .btn-contacto {
+            display: inline-flex; justify-content: center; align-items: center; gap: 8px;
+            background-color: var(--color-exito); color: white;
+            text-decoration: none; padding: 8px 15px; border-radius: 8px;
+            font-size: 0.9rem; font-weight: bold; width: 100%;
+        }
+
+        /* =========================================
+           BOTÓN GENERAR CARTEL QR
+           ========================================= */
+        .zona-qr {
+            text-align: center; padding: 20px 15px 40px 15px;
+        }
+        .btn-qr {
+            background-color: var(--color-texto); color: var(--color-arena);
+            border: none; padding: 15px 20px; border-radius: 10px;
+            font-size: 1rem; font-weight: bold; cursor: pointer; width: 100%;
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        .btn-qr:active { transform: scale(0.98); }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- Regresa dinámicamente a la página anterior del historial -->
+        <button onclick="history.back()" class="btn-volver"><i class="fa-solid fa-arrow-left"></i></button>
+        <h1 id="titulo-header">Cargando...</h1>
+    </header>
+
+    <main id="contenido-directorio" style="display: none;">
+        
+        <!-- Carrusel Manual -->
+        <div class="carrusel-contenedor">
+            <button class="btn-carrusel btn-prev" onclick="moverCarrusel(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="btn-carrusel btn-next" onclick="moverCarrusel(1)"><i class="fa-solid fa-chevron-right"></i></button>
+            
+            <div class="carrusel-slides" id="carrusel-imagenes">
+                <!-- Las imágenes se inyectan con JS -->
+            </div>
+        </div>
+
+        <!-- Información del Lugar -->
+        <div class="info-seccion">
+            <h2 id="lugar-nombre">Nombre del Lugar</h2>
+            <div class="ubicacion"><i class="fa-solid fa-location-dot"></i> <span id="lugar-ubicacion">Ubicación</span></div>
+            <p class="descripcion" id="lugar-descripcion">Descripción del lugar.</p>
+            
+            <div class="servicios-tags" id="contenedor-servicios">
+                <!-- Etiquetas de servicios se inyectan con JS -->
+            </div>
+        </div>
+
+        <!-- Listado de Comercios / Menú -->
+        <div class="directorio-seccion">
+            <h3>Directorio Comercial & Precios</h3>
+            <div id="contenedor-comercios">
+                <!-- Las tarjetas de comercio se inyectan con JS -->
+            </div>
+        </div>
+
+        <!-- Zona de descarga de Cartel QR -->
+        <div class="zona-qr">
+            <button class="btn-qr" onclick="alert('Descargando cartel QR en formato PDF...')">
+                <i class="fa-solid fa-qrcode"></i> Descargar Cartel QR de este lugar
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Pantalla de Carga -->
+    <div id="mensaje-estado" style="text-align: center; padding: 50px 20px; color: #666;">
+        <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
+        <p style="margin-top: 15px;">Cargando directorio...</p>
+    </div>
+
+    <script>
+        // Base de Datos de Destinos Finales
+        const destinosDB = {
+            "machurucual": {
+                nombre: "Playa Machurucuto",
+                ubicacion: "Municipio Pedro Gual, Vía Cúpira",
+                imagenes: [
+                    "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1506477331477-33d5d8b3dc85?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                ],
+                descripcion: "Un paraje impresionante donde el río desemboca en el mar. Ideal para relajarse, caminar por la extensa arena y disfrutar de la brisa oriental. El oleaje es moderado y cuenta con una rica oferta gastronómica local.",
+                servicios: [
+                    { nombre: "Restaurantes", icono: "fa-utensils" },
+                    { nombre: "Estacionamiento", icono: "fa-car" },
+                    { nombre: "Alquiler de Toldos", icono: "fa-umbrella-beach" }
+                ],
+                comercios: [
+                    { negocio: "Restaurante La Desembocadura", producto: "Pescado Frito con Tostones", precio: "$12", telefono: "584120000000" },
+                    { negocio: "Parador El Cocal", producto: "Ración de Empanadas (Cazón)", precio: "$4", telefono: "584120000000" },
+                    { negocio: "Alquileres Machurucuto", producto: "1 Toldo + 2 Sillas", precio: "$5", telefono: "584120000000" }
+                ]
+            },
+            "los-totumos": {
+                nombre: "Playa Los Totumos",
+                ubicacion: "Municipio Brión, Higuerote",
+                imagenes: [
+                    "https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                ],
+                descripcion: "Una de las bahías más tranquilas de Barlovento. Sin oleaje fuerte, es perfecta para el disfrute seguro de niños y familias. Aguas cristalinas y arena fina.",
+                servicios: [
+                    { nombre: "Baños Públicos", icono: "fa-restroom" },
+                    { nombre: "Comida", icono: "fa-burger" },
+                    { nombre: "Deportes Acuáticos", icono: "fa-water" }
+                ],
+                comercios: [
+                    { negocio: "Kiosko El Sabor Playero", producto: "Hervido de Pescado", precio: "$8", telefono: "584120000000" },
+                    { negocio: "Banana Boat Totumos", producto: "Paseo en Banana (x Persona)", precio: "$3", telefono: "584120000000" }
+                ]
+            }
+        };
+
+        // Extraer ID de la URL
+        function obtenerParametroURL(nombre) {
+            return new URLSearchParams(window.location.search).get(nombre);
+        }
+
+        // Lógica de carga
+        function cargarDirectorio() {
+            const idLugar = obtenerParametroURL('id');
+            const lugar = destinosDB[idLugar];
+            const contenedor = document.getElementById('contenido-directorio');
+            const estado = document.getElementById('mensaje-estado');
+
+            if (lugar) {
+                document.getElementById('titulo-header').textContent = lugar.nombre;
+                document.getElementById('lugar-nombre').textContent = lugar.nombre;
+                document.getElementById('lugar-ubicacion').textContent = lugar.ubicacion;
+                document.getElementById('lugar-descripcion').textContent = lugar.descripcion;
+
+                // Cargar imágenes del carrusel (Manual)
+                const contenedorImagenes = document.getElementById('carrusel-imagenes');
+                let htmlImagenes = '';
+                lugar.imagenes.forEach(img => {
+                    htmlImagenes += `<div class="slide" style="background-image: url('${img}');"></div>`;
+                });
+                contenedorImagenes.innerHTML = htmlImagenes;
+
+                // Cargar servicios
+                const contenedorServicios = document.getElementById('contenedor-servicios');
+                let htmlServicios = '';
+                lugar.servicios.forEach(srv => {
+                    htmlServicios += `<span class="tag"><i class="fa-solid ${srv.icono}"></i> ${srv.nombre}</span>`;
+                });
+                contenedorServicios.innerHTML = htmlServicios;
+
+                // Cargar comercios y precios
+                const contenedorComercios = document.getElementById('contenedor-comercios');
+                let htmlComercios = '';
+                lugar.comercios.forEach(comercio => {
+                    const mensajeWs = encodeURIComponent(`Hola, vi tu servicio de ${comercio.producto} en Monbá QR. Quiero más información.`);
+                    htmlComercios += `
+                        <div class="tarjeta-comercio">
+                            <div class="comercio-header">
+                                <span class="comercio-nombre">${comercio.negocio}</span>
+                                <span class="comercio-precio">${comercio.precio}</span>
+                            </div>
+                            <p class="comercio-desc">Ofrece: ${comercio.producto}</p>
+                            <a href="https://wa.me/${comercio.telefono}?text=${mensajeWs}" target="_blank" class="btn-contacto">
+                                <i class="fa-brands fa-whatsapp"></i> Contactar
+                            </a>
+                        </div>
+                    `;
+                });
+                contenedorComercios.innerHTML = htmlComercios;
+
+                // Mostrar todo
+                estado.style.display = 'none';
+                contenedor.style.display = 'block';
+            } else {
+                document.getElementById('titulo-header').textContent = "No encontrado";
+                estado.innerHTML = `<i class="fa-solid fa-circle-xmark fa-2x"></i><p style="margin-top: 15px;">Lugar no disponible.</p>`;
+            }
+        }
+
+        // Lógica del Carrusel Manual (Pasa a la siguiente foto usando el ancho de la pantalla)
+        function moverCarrusel(direccion) {
+            const carrusel = document.getElementById('carrusel-imagenes');
+            const anchoSlide = carrusel.clientWidth;
+            carrusel.scrollBy({ left: anchoSlide * direccion, behavior: 'smooth' });
+        }
+
+        // Ejecutar al iniciar
+        document.addEventListener("DOMContentLoaded", cargarDirectorio);
+    </script>
+</body>
+</html>

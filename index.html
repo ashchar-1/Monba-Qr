@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monbá QR - Descubre Barlovento</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --color-primario: #0077b6;
+            --color-secundario: #00b4d8;
+            --color-arena: #fefae0;
+            --color-texto: #333333;
+            --color-blanco: #ffffff;
+            --color-gris: #f4f4f4;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--color-gris); color: var(--color-texto); overflow-x: hidden; }
+
+        /* =========================================
+           PANTALLA DE CARGA (SPLASH SCREEN)
+           ========================================= */
+        #splash-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--color-primario);
+            color: var(--color-blanco);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; /* Por encima de todo */
+            transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
+        }
+
+        .splash-logo {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            animation: latido 1.5s infinite;
+        }
+
+        .splash-texto { font-size: 1.5rem; font-weight: bold; letter-spacing: 2px; }
+        .splash-sub { font-size: 0.9rem; color: var(--color-secundario); margin-top: 5px; }
+
+        @keyframes latido {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        /* =========================================
+           INTERFAZ PRINCIPAL (HOME)
+           ========================================= */
+        header {
+            background-color: var(--color-primario); color: var(--color-blanco);
+            padding: 15px 20px; display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .header-izq { display: flex; align-items: center; gap: 15px; }
+        .btn-menu { background: none; border: none; color: white; font-size: 1.3rem; cursor: pointer; }
+        header h1 { font-size: 1.2rem; }
+
+        /* Hero Section General */
+        .hero-home { 
+            width: 100%; height: 35vh; 
+            background-image: url('https://images.unsplash.com/photo-1596422846543-74c6fc11a8c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
+            background-size: cover; background-position: center; position: relative; 
+            display: flex; justify-content: center; align-items: center; text-align: center;
+        }
+        .hero-capa {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 1;
+        }
+        .hero-contenido {
+            position: relative; z-index: 2; color: white; padding: 20px;
+        }
+        .hero-contenido h2 { font-size: 2.2rem; margin-bottom: 10px; }
+        .hero-contenido p { font-size: 1rem; color: var(--color-arena); }
+
+        /* Secciones del Home */
+        .seccion { background-color: var(--color-blanco); margin: 15px; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .seccion h2 { font-size: 1.2rem; color: var(--color-primario); margin-bottom: 15px; border-bottom: 2px solid var(--color-arena); padding-bottom: 5px; }
+        
+        .grid-categorias {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+        }
+        .btn-categoria {
+            background-color: var(--color-gris); padding: 15px 10px; border-radius: 10px;
+            text-align: center; color: var(--color-texto); text-decoration: none; font-weight: bold;
+            display: flex; flex-direction: column; gap: 8px; font-size: 0.9rem; border: 1px solid #ddd;
+        }
+        .btn-categoria i { font-size: 1.8rem; color: var(--color-primario); }
+
+        /* Banner para Comercios */
+        .banner-comercio {
+            background: linear-gradient(135deg, #111, #333); color: white; margin: 20px 15px; padding: 25px 20px;
+            border-radius: 15px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .banner-comercio h3 { color: var(--color-secundario); margin-bottom: 10px; font-size: 1.3rem; }
+        .banner-comercio p { font-size: 0.9rem; margin-bottom: 15px; color: #ccc; }
+        .btn-unirse {
+            background-color: #25D366; color: white; border: none; padding: 12px 20px;
+            border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1rem; width: 100%;
+            display: flex; justify-content: center; align-items: center; gap: 10px; text-decoration: none;
+        }
+
+        /* =========================================
+           MENÚ LATERAL (BANDEJA DE MUNICIPIOS)
+           ========================================= */
+        .bandeja-lateral {
+            position: fixed; top: 0; left: -100%; width: 85%; max-width: 320px; height: 100%;
+            background-color: var(--color-blanco); z-index: 300;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.2); transition: left 0.3s ease;
+            display: flex; flex-direction: column;
+        }
+        .bandeja-lateral.abierta { left: 0; }
+        .bandeja-header {
+            background-color: var(--color-primario); color: white; padding: 20px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .bandeja-contenido { padding: 0; overflow-y: auto; flex: 1; }
+        
+        /* Enlaces a los municipios */
+        .item-municipio {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 18px 20px; border-bottom: 1px solid #eee; text-decoration: none; 
+            color: var(--color-texto); font-weight: 500; font-size: 1.05rem; transition: background 0.2s;
+        }
+        .item-municipio:active { background-color: var(--color-gris); }
+        .item-municipio i { color: var(--color-secundario); }
+
+        .overlay-bandeja {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 250;
+        }
+        .overlay-bandeja.activo { display: block; }
+    </style>
+</head>
+<body>
+
+    <!-- =========================================
+         SPLASH SCREEN (PANTALLA DE CARGA)
+         ========================================= -->
+    <div id="splash-screen">
+        <i class="fa-solid fa-qrcode splash-logo"></i>
+        <div class="splash-texto">Monbá QR</div>
+        <div class="splash-sub">La Guía de Barlovento</div>
+    </div>
+
+    <!-- ENCABEZADO -->
+    <header>
+        <div class="header-izq">
+            <button class="btn-menu" onclick="abrirBandeja()"><i class="fa-solid fa-bars-staggered"></i></button>
+            <h1>Monbá QR</h1>
+        </div>
+        <i class="fa-solid fa-map-location-dot"></i>
+    </header>
+
+    <!-- MENÚ LATERAL (MUNICIPIOS) -->
+    <div id="overlay" class="overlay-bandeja" onclick="cerrarBandeja()"></div>
+    <div id="bandeja" class="bandeja-lateral">
+        <div class="bandeja-header">
+            <h2>Explorar Región</h2>
+            <button class="btn-menu" onclick="cerrarBandeja()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="bandeja-contenido">
+            <!-- Nota: Estos enlaces llevarán al archivo municipio.html que debes crear -->
+            <a href="municipio.html?id=pedro-gual" class="item-municipio">Municipio Pedro Gual <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="municipio.html?id=paez" class="item-municipio">Municipio Páez <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="municipio.html?id=brion" class="item-municipio">Municipio Brión <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="municipio.html?id=andres-bello" class="item-municipio">Mun. Andrés Bello <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="municipio.html?id=buroz" class="item-municipio">Municipio Buroz <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="municipio.html?id=acevedo" class="item-municipio">Municipio Acevedo <i class="fa-solid fa-chevron-right"></i></a>
+        </div>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main>
+        <div class="hero-home">
+            <div class="hero-capa"></div>
+            <div class="hero-contenido">
+                <h2>Descubre<br>Barlovento</h2>
+                <p>Playas, ríos y la mejor gastronomía a un toque de distancia.</p>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h2>¿Qué buscas hoy?</h2>
+            <div class="grid-categorias">
+                <a href="#" class="btn-categoria" onclick="abrirBandeja()">
+                    <i class="fa-solid fa-umbrella-beach"></i> Playas
+                </a>
+                <a href="#" class="btn-categoria" onclick="abrirBandeja()">
+                    <i class="fa-solid fa-utensils"></i> Dónde Comer
+                </a>
+                <a href="#" class="btn-categoria" onclick="abrirBandeja()">
+                    <i class="fa-solid fa-bed"></i> Posadas
+                </a>
+                <a href="#" class="btn-categoria" onclick="abrirBandeja()">
+                    <i class="fa-solid fa-route"></i> Rutas
+                </a>
+            </div>
+        </div>
+
+        <!-- Banner de Ventas B2B -->
+        <div class="banner-comercio">
+            <h3>¿Tienes un negocio en la zona?</h3>
+            <p>Digitaliza tu menú o catálogo de servicios. Llega a miles de turistas sin imprimir papel.</p>
+            <!-- Sustituye el 584120000000 con tu número de teléfono -->
+            <a href="https://wa.me/584260557902?text=Hola,%20quiero%20afiliar%20mi%20negocio%20a%20Monbá%20QR" target="_blank" class="btn-unirse">
+                <i class="fa-brands fa-whatsapp"></i> Unir mi comercio
+            </a>
+        </div>
+    </main>
+
+    <script>
+        // Lógica del Splash Screen
+        document.addEventListener("DOMContentLoaded", () => {
+            // Esperamos 2.5 segundos (2500ms) para mostrar la animación
+            setTimeout(() => {
+                const splash = document.getElementById("splash-screen");
+                splash.style.opacity = "0"; // Efecto de desvanecimiento
+                splash.style.visibility = "hidden"; // Oculta el elemento para poder clickear abajo
+                
+                // Lo eliminamos del DOM después de que termine la transición
+                setTimeout(() => {
+                    splash.style.display = "none";
+                }, 600); 
+            }, 2500); 
+        });
+
+        // Lógica del Menú Hamburguesa
+        function abrirBandeja() {
+            document.getElementById('bandeja').classList.add('abierta');
+            document.getElementById('overlay').classList.add('activo');
+        }
+
+        function cerrarBandeja() {
+            document.getElementById('bandeja').classList.remove('abierta');
+            document.getElementById('overlay').classList.remove('activo');
+        }
+    </script>
+</body>
+</html>

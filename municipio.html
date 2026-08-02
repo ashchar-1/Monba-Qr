@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monbá QR - Municipio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --color-primario: #0077b6;
+            --color-secundario: #00b4d8;
+            --color-arena: #fefae0;
+            --color-texto: #333333;
+            --color-blanco: #ffffff;
+            --color-gris: #f4f4f4;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--color-gris); color: var(--color-texto); overflow-x: hidden; }
+
+        /* Encabezado minimalista */
+        header {
+            background-color: var(--color-primario); color: var(--color-blanco);
+            padding: 15px 20px; display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .btn-volver { color: white; text-decoration: none; font-size: 1.2rem; }
+        header h1 { font-size: 1.2rem; margin: 0 auto; padding-right: 15px;}
+
+        /* Contenedor del Mapa */
+        .mapa-contenedor {
+            width: 100%;
+            height: 250px;
+            background-color: #ddd;
+            position: relative;
+        }
+        .mapa-contenedor iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Tarjeta de Reseña del Municipio (superpuesta al mapa) */
+        .resena-tarjeta {
+            background-color: var(--color-blanco);
+            margin: -40px 15px 15px 15px; /* Margen negativo para montar sobre el mapa */
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+        }
+        .resena-tarjeta h2 {
+            color: var(--color-primario);
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .resena-tarjeta p {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        /* Cuadrícula de Categorías (Estética visual) */
+        .categorias-seccion {
+            padding: 10px 15px 30px 15px;
+        }
+        .categorias-seccion h3 {
+            font-size: 1.1rem;
+            color: var(--color-texto);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--color-arena);
+            padding-bottom: 5px;
+        }
+
+        .grid-categorias {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* Tarjetas de Categoría con imagen de fondo */
+        .tarjeta-categoria {
+            position: relative;
+            height: 130px;
+            border-radius: 12px;
+            overflow: hidden;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+            transition: transform 0.2s;
+        }
+        .tarjeta-categoria:active { transform: scale(0.95); }
+
+        .tarjeta-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+        }
+        
+        /* Gradiente oscuro para que el texto sea siempre legible */
+        .tarjeta-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+            z-index: 2;
+        }
+
+        .tarjeta-contenido {
+            position: relative;
+            z-index: 3;
+            color: var(--color-blanco);
+            text-align: center;
+        }
+        .tarjeta-contenido i { font-size: 2rem; margin-bottom: 8px; color: var(--color-arena); }
+        .tarjeta-contenido span { font-weight: bold; font-size: 1rem; letter-spacing: 0.5px; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="btn-volver"><i class="fa-solid fa-arrow-left"></i></a>
+        <h1 id="header-titulo">Cargando...</h1>
+    </header>
+
+    <main id="contenido-municipio" style="display: none;">
+        
+        <!-- Mapa -->
+        <div class="mapa-contenedor">
+            <iframe id="mapa-iframe" src="" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+
+        <!-- Reseña -->
+        <div class="resena-tarjeta">
+            <h2 id="municipio-nombre"><i class="fa-solid fa-map-location-dot"></i> </h2>
+            <p id="municipio-resena"></p>
+        </div>
+
+        <!-- Categorías Estéticas -->
+        <div class="categorias-seccion">
+            <h3>Explora por Categoría</h3>
+            <div class="grid-categorias" id="contenedor-categorias">
+                <!-- Se inyectan con JS -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Estado de carga/error -->
+    <div id="mensaje-estado" style="text-align: center; padding: 50px 20px; color: #666;">
+        <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
+        <p style="margin-top: 15px;">Buscando información...</p>
+    </div>
+
+    <script>
+        // Base de datos de Municipios de Barlovento
+        const municipiosDB = {
+            "pedro-gual": {
+                nombre: "Municipio Pedro Gual",
+                // Mapa incrustado de Google Maps (Coordenadas de Cupira)
+                mapaUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125586.32626649774!2d-65.77663245!3d10.15583565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c2c77df93b8909f%3A0xc39cb709b114d642!2sCupira%2C%20Miranda!5e0!3m2!1ses!2sve!4v1700000000000!5m2!1ses!2sve",
+                resena: "Conocida como la 'Puerta de Oriente', Cupira y el municipio Pedro Gual son famosos por su deliciosa gastronomía de carretera, su icónico casabe y la hermosa playa de Machurucuto. Es el punto de partida perfecto para explorar Barlovento.",
+                categorias: [
+                    // El enlace 'href' debe apuntar al archivo que creamos al principio de todo (tu directorio final).
+                    // Asumiré que lo llamarás 'directorio.html'
+                    { id: "playas", nombre: "Playas", icono: "fa-umbrella-beach", bg: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80", link: "directorio.html?id=machurucual" },
+                    { id: "comer", nombre: "Comer", icono: "fa-utensils", bg: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80", link: "directorio.html?id=comida-cupira" },
+                    { id: "dormir", nombre: "Posadas", icono: "fa-bed", bg: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80", link: "directorio.html?id=posadas-pedrogual" },
+                    { id: "compras", nombre: "Tradición", icono: "fa-store", bg: "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80", link: "directorio.html?id=casabe-cupira" }
+                ]
+            },
+            "brion": {
+                nombre: "Municipio Brión",
+                mapaUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125547.88785802187!2d-66.195037!3d10.4907954!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c2b740523030ba3%3A0xc3fa5a73e35a1a0c!2sHiguerote%2C%20Miranda!5e0!3m2!1ses!2sve!4v1700000000000!5m2!1ses!2sve",
+                resena: "Higuerote y sus alrededores representan el epicentro turístico de la costa mirandina. Desde las tranquilas aguas de Los Totumos hasta el oleaje de Chirimena y el inconfundible sonido del tambor en Curiepe.",
+                categorias: [
+                    { id: "playas", nombre: "Playas", icono: "fa-water", bg: "https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80", link: "directorio.html?id=los-totumos" },
+                    { id: "comer", nombre: "Comer", icono: "fa-utensils", bg: "https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80", link: "directorio.html?id=comida-brion" },
+                    { id: "dormir", nombre: "Posadas", icono: "fa-bed", bg: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80", link: "directorio.html?id=posadas-brion" },
+                    { id: "rutas", nombre: "Rutas", icono: "fa-ship", bg: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80", link: "directorio.html?id=rutas-brion" }
+                ]
+            }
+        };
+
+        function obtenerParametroURL(nombre) {
+            return new URLSearchParams(window.location.search).get(nombre);
+        }
+
+        function cargarMunicipio() {
+            const idMunicipio = obtenerParametroURL('id');
+            const municipio = municipiosDB[idMunicipio];
+
+            const contenedor = document.getElementById('contenido-municipio');
+            const estado = document.getElementById('mensaje-estado');
+
+            if (municipio) {
+                // Textos y Reseña
+                document.getElementById('header-titulo').textContent = municipio.nombre;
+                document.getElementById('municipio-nombre').innerHTML = `<i class="fa-solid fa-map-location-dot"></i> ${municipio.nombre}`;
+                document.getElementById('municipio-resena').textContent = municipio.resena;
+                
+                // Mapa
+                document.getElementById('mapa-iframe').src = municipio.mapaUrl;
+
+                // Cargar categorías estéticas
+                const contenedorCategorias = document.getElementById('contenedor-categorias');
+                let htmlCategorias = '';
+                
+                municipio.categorias.forEach(cat => {
+                    htmlCategorias += `
+                        <a href="${cat.link}" class="tarjeta-categoria">
+                            <div class="tarjeta-bg" style="background-image: url('${cat.bg}');"></div>
+                            <div class="tarjeta-overlay"></div>
+                            <div class="tarjeta-contenido">
+                                <i class="fa-solid ${cat.icono}"></i>
+                                <br>
+                                <span>${cat.nombre}</span>
+                            </div>
+                        </a>
+                    `;
+                });
+                
+                contenedorCategorias.innerHTML = htmlCategorias;
+
+                // Mostrar contenido
+                estado.style.display = 'none';
+                contenedor.style.display = 'block';
+
+            } else {
+                document.getElementById('header-titulo').textContent = "Error";
+                estado.innerHTML = `<i class="fa-solid fa-triangle-exclamation fa-2x"></i><p style="margin-top: 15px;">Municipio no encontrado. Vuelve al inicio.</p>`;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", cargarMunicipio);
+    </script>
+</body>
+</html>
