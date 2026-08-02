@@ -1,2 +1,0 @@
-# Monba-Qr
-Un explorador
