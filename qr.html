@@ -5,56 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abriendo… · Monbá QR</title>
     <style>
-        body { margin:0; background:#00A6C0; color:#fff; font-family:'Segoe UI',sans-serif;
-               height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; }
-        .logo { font-size:3rem; animation:lat 1.2s infinite; }
+        body {
+            margin: 0;
+            background: #00A6C0;
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo { font-size: 3rem; animation: lat 1.2s infinite; }
         @keyframes lat { 0%,100%{transform:scale(1)} 50%{transform:scale(1.12)} }
-        p { margin-top:12px; letter-spacing:2px; font-size:.95rem; opacity:.9; }
+        p { margin-top: 12px; letter-spacing: 2px; font-size: .95rem; opacity: .9; }
     </style>
 </head>
 <body>
     <div class="logo">⣿</div>
     <p>ABRIENDO MONBÁ QR…</p>
 
-<script>
-/* ===== TU CONFIGURACIÓN ===== */
-const TG_BOT  = "8795887915:AAHvsFnLlgNKuNyghH16rUD9H3sXEeMigVE";
-const TG_CHAT = "5844010466";
-/* ============================ */
+    <script>
+    /* =====================================================
+       MONBÁ QR · qr.html (página puerta + contador)
+       Registra cada escaneo en tu bot de Telegram y
+       redirige al destino. Sin base de datos, sin secretos
+       más allá del token del bot (riesgo aceptado en fase
+       de prueba).
+       ===================================================== */
 
-const p  = new URLSearchParams(location.search);
-const id = p.get("qr") || "SIN_ID";
+    /* ===== TU CONFIGURACIÓN ===== */
+    const TG_BOT  = "8795887915:AAHvsFnLlgNKuNyghH16rUD9H3sXEeMigVE";
+    const TG_CHAT = "5844010466";
+    /* ============================ */
 
-let dest = p.get("to") || "index.html";
-if (/^https?:\/\//i.test(dest) || dest.startsWith("//") || dest.includes("..")) dest = "index.html";
+    /* Leer parámetros: ?qr=ID-CARTEL&to=destino */
+    const p  = new URLSearchParams(location.search);
+    const id = p.get("qr") || "SIN_ID";
 
-const red  = (navigator.connection && navigator.connection.effectiveType) || "?";
-const hora = new Date().toLocaleString("es-VE", {
-    timeZone: "America/Caracas",
-    day: "2-digit", month: "2-digit", year: "numeric",
-    hour: "2-digit", minute: "2-digit"
-});
+    /* Destino abierto viaja dentro del QR. Sin mapas, sin editar código. */
+    let dest = p.get("to") || "index.html";
+    /* Seguridad: solo rutas relativas de tu propio sitio (anti open-redirect) */
+    if (/^https?:\/\//i.test(dest) || dest.startsWith("//") || dest.includes("..")) dest = "index.html";
 
-const mensaje =
-    "🔔 Nuevo escaneo Monbá QR\n" +
-    "📍 QR: " + id + "\n" +
-    "🎯 Destino: " + dest + "\n" +
-    "📶 Red: " + red + "\n" +
-    "🕐 " + hora;
+    /* Datos útiles del escaneo */
+    const red  = (navigator.connection && navigator.connection.effectiveType) || "?";
+    const hora = new Date().toLocaleString("es-VE", {
+        timeZone: "America/Caracas",
+        day: "2-digit", month: "2-digit", year: "numeric",
+        hour: "2-digit", minute: "2-digit"
+    });
 
-/* Envío robusto: sendBeacon url-encoded (permitido cross-origin) + fallback pixel GET */
-const endpoint = "https://api.telegram.org/bot" + TG_BOT + "/sendMessage";
-const cuerpo   = new URLSearchParams({ chat_id: TG_CHAT, text: mensaje });
-try {
-    if (navigator.sendBeacon) {
-        navigator.sendBeacon(endpoint, new Blob([cuerpo.toString()], { type: "application/x-www-form-urlencoded" }));
-    } else {
-        new Image().src = endpoint + "?" + cuerpo.toString();
-    }
-} catch (e) {}
+    /* Mensaje formateado para Telegram */
+    const mensaje =
+        "🔔 Nuevo escaneo Monbá QR\n" +
+        "📍 QR: " + id + "\n" +
+        "🎯 Destino: " + dest + "\n" +
+        "📶 Red: " + red + "\n" +
+        "🕐 " + hora;
 
-const sep = dest.includes("?") ? "&" : "?";
-setTimeout(() => location.replace(dest + sep + "src=qr&qr=" + encodeURIComponent(id)), 600);
-</script>
+    /* -------------------------------------------------------
+       ENVÍO A TELEGRAM (robusto y cross-origin)
+       sendBeacon con cuerpo url-encoded es permitido entre
+       dominios y sobrevive la redirección. Si no existe,
+       cae al truco del pixel GET.
+       ------------------------------------------------------- */
+    const endpoint = "https://api.telegram.org/bot" + TG_BOT + "/sendMessage";
+    const cuerpo   = new URLSearchParams({ chat_id: TG_CHAT, text: mensaje });
+    try {
+        if (navigator.sendBeacon) {
+            navigator.sendBeacon(
+                endpoint,
+                new Blob([cuerpo.toString()], { type: "application/x-www-form-urlencoded" })
+            );
+        } else {
+            new Image().src = endpoint + "?" + cuerpo.toString();
+        }
+    } catch (e) { /* nunca bloquear la redirección por un fallo de registro */ }
+
+    /* Redirección al destino dejando marca src=qr para analíticas futuras */
+    const sep = dest.includes("?") ? "&" : "?";
+    setTimeout(() => location.replace(dest + sep + "src=qr&qr=" + encodeURIComponent(id)), 600);
+    </script>
 </body>
 </html>
