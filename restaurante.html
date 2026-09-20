@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil del Restaurante - Monbá QR</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header><button onclick="history.back()" class="btn-volver"><i class="fa-solid fa-arrow-left"></i></button><button class="btn-volver" data-action="compartir" data-titulo="Restaurante" data-texto="Mira este menú"><i class="fa-solid fa-share-nodes"></i></button></header>
+    <main id="perfil-negocio" style="display: none;">
+        <div class="portada-negocio" id="foto-portada" style="width: 100%; height: 35vh; background-size: cover; background-position: center; position: relative;"><div style="position: absolute; bottom: 0; width: 100%; height: 50%; background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.8));"></div></div>
+        <div class="resena-tarjeta">
+            <h1 id="nombre-negocio" style="font-size: 1.6rem; color: var(--color-primario); margin-bottom: 5px;">Nombre Restaurante</h1>
+            <span style="color: #2a9d8f; font-weight: bold; font-size: 0.9rem; display: flex; align-items: center; gap: 5px;"><i class="fa-solid fa-door-open"></i> Abierto ahora</span>
+            <p class="descripcion" id="desc-negocio" style="font-size: 0.95rem; color: #666; margin: 10px 0;">Descripción del restaurante.</p>
+            <div class="barra-acciones">
+                <button class="btn-accion" id="btn-ruta-rest" data-action="ruta"><i class="fa-solid fa-route"></i> Cómo llegar</button>
+                <a href="#" id="btn-ws-general" class="btn-accion" style="text-decoration: none;"><i class="fa-brands fa-whatsapp"></i> Chat</a>
+                <button class="btn-accion" data-action="ver-qr"><i class="fa-solid fa-qrcode"></i> Ver QR</button>
+            </div>
+        </div>
+        <div class="directorio-seccion" id="contenedor-menu"></div>
+    </main>
+    <div id="mensaje-estado" class="estado-pantalla"><i class="fa-solid fa-spinner fa-spin fa-2x"></i><p>Cargando perfil del negocio...</p></div>
+    <footer class="monba-footer">© <span data-anio></span> Monbá QR · Directorio Turístico de Barlovento<br>Diseño y desarrollo: <span class="firma">Luis Alejandro Hernández Rada</span></footer>
+    <script src="app.js"></script><script src="restaurante.js"></script>
+</body>
+</html>

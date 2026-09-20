@@ -1,0 +1,253 @@
+/* =====================================================
+   MONBÁ QR · styles.css (SISTEMA DE DISEÑO COMPLETO)
+   ===================================================== */
+
+/* 1. VARIABLES */
+:root {
+    --color-primario: #0077b6;
+    --color-secundario: #00b4d8;
+    --color-arena: #fefae0;
+    --color-texto: #333333;
+    --color-blanco: #ffffff;
+    --color-gris: #f4f4f4;
+    --color-whatsapp: #25D366;
+    --color-exito: #2e7d32;
+    --sombra-suave: 0 2px 8px rgba(0,0,0,.05);
+    --sombra-media: 0 3px 6px rgba(0,0,0,.08);
+    --sombra-alta: 0 4px 15px rgba(0,0,0,.12);
+    --radio-sm: 8px; --radio-md: 12px; --radio-lg: 16px; --radio-pill: 25px;
+    --transicion: .2s ease;
+}
+
+/* 2. RESET */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+body { background-color: var(--color-gris); color: var(--color-texto); overflow-x: hidden; }
+a { text-decoration: none; color: inherit; }
+
+/* 3. SPLASH */
+#splash-screen {
+    position: fixed; inset: 0;
+    background: linear-gradient(135deg, #0077b6 0%, #00b4d8 50%, #0077b6 100%);
+    background-size: 200% 200%; color: var(--color-blanco);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    z-index: 9999; animation: gradientShift 3s ease infinite;
+    transition: opacity .6s ease-out, visibility .6s ease-out;
+}
+@keyframes gradientShift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+.splash-logo { font-size: 5rem; margin-bottom: 20px; animation: latido 1.5s infinite, rotateIn 1s ease-out; filter: drop-shadow(0 4px 12px rgba(0,0,0,.3)); }
+@keyframes rotateIn { from{transform:rotate(-180deg) scale(0);opacity:0} to{transform:rotate(0) scale(1);opacity:1} }
+.splash-texto { font-size: 2rem; font-weight: 800; letter-spacing: 3px; animation: slideDown .8s ease-out .3s both; text-shadow: 0 2px 10px rgba(0,0,0,.2); }
+.splash-sub { font-size: 1rem; color: var(--color-arena); margin-top: 10px; animation: fadeIn 1s ease-out .6s both; letter-spacing: 2px; }
+@keyframes slideDown { from{transform:translateY(-30px);opacity:0} to{transform:translateY(0);opacity:1} }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes latido { 0%{transform:scale(1)} 50%{transform:scale(1.15)} 100%{transform:scale(1)} }
+
+/* 4. HEADER */
+header {
+    background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-secundario) 100%);
+    color: var(--color-blanco); padding: 15px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 12px rgba(0,119,182,.3);
+}
+.header-izq { display: flex; align-items: center; gap: 15px; }
+header h1 { font-size: 1.3rem; font-weight: 700; letter-spacing: .5px; }
+.btn-menu, .btn-volver {
+    background: rgba(255,255,255,.2); border: none; color: white;
+    font-size: 1.2rem; cursor: pointer; width: 42px; height: 42px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .3s ease; backdrop-filter: blur(10px);
+}
+.btn-menu:hover, .btn-volver:hover { background: rgba(255,255,255,.3); transform: scale(1.05); }
+.btn-favoritos-header {
+    color: white; font-size: 1.2rem; width: 42px; height: 42px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,.2); transition: all .3s ease; backdrop-filter: blur(10px);
+}
+.btn-favoritos-header:hover { background: rgba(255,255,255,.3); transform: scale(1.05); }
+.btn-favoritos-header:hover i { color: #ff6b6b; }
+
+/* 5. BANDEJA */
+.bandeja-lateral {
+    position: fixed; top: 0; left: -100%; width: 85%; max-width: 320px; height: 100%;
+    background: var(--color-blanco); z-index: 300; box-shadow: 2px 0 10px rgba(0,0,0,.2);
+    transition: left .3s ease; display: flex; flex-direction: column;
+}
+.bandeja-lateral.abierta { left: 0; }
+.bandeja-header { background: linear-gradient(135deg, var(--color-primario), var(--color-secundario)); color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
+.bandeja-header h2 { display: flex; align-items: center; gap: 10px; font-size: 1.2rem; }
+.bandeja-contenido { overflow-y: auto; flex: 1; }
+.item-municipio { display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; border-bottom: 1px solid #eee; font-weight: 500; font-size: 1.05rem; transition: background var(--transicion); }
+.item-municipio:active { background-color: var(--color-gris); }
+.item-municipio i { color: var(--color-secundario); }
+.overlay-bandeja { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 250; }
+.overlay-bandeja.activo { display: block; }
+
+/* 6. HERO */
+.hero-home { width: 100%; height: 35vh; background-size: cover; background-position: center; position: relative; display: flex; justify-content: center; align-items: center; text-align: center; }
+.hero-capa { position: absolute; inset: 0; background: rgba(0,0,0,.5); z-index: 1; }
+.hero-contenido { position: relative; z-index: 2; color: white; padding: 20px; }
+.hero-contenido h2 { font-size: 2.2rem; margin-bottom: 10px; text-shadow: 0 2px 4px rgba(0,0,0,.3); }
+.hero-contenido p { font-size: 1rem; color: var(--color-arena); }
+
+/* 7. SECCIONES */
+.seccion { background: var(--color-blanco); margin: 15px; padding: 20px; border-radius: var(--radio-md); box-shadow: var(--sombra-suave); }
+.seccion h2 { font-size: 1.3rem; color: var(--color-texto); margin-bottom: 15px; border-bottom: 2px solid var(--color-arena); padding-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+.seccion h2 i { color: var(--color-secundario); }
+.grid-categorias { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.btn-categoria { background: var(--color-gris); padding: 15px 10px; border-radius: 10px; text-align: center; font-weight: bold; font-size: .9rem; border: 1px solid #ddd; display: flex; flex-direction: column; gap: 8px; align-items: center; cursor: pointer; transition: all .2s ease; }
+.btn-categoria:active { transform: scale(.95); background: #e9ecef; }
+.btn-categoria i { font-size: 1.8rem; color: var(--color-primario); }
+.tarjeta-categoria { position: relative; height: 130px; border-radius: var(--radio-md); overflow: hidden; display: flex; justify-content: center; align-items: center; box-shadow: var(--sombra-media); transition: transform var(--transicion); }
+.tarjeta-categoria:active { transform: scale(.95); }
+.tarjeta-bg { position: absolute; inset: 0; background-size: cover; background-position: center; z-index: 1; }
+.tarjeta-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,.3), rgba(0,0,0,.7)); z-index: 2; }
+.tarjeta-contenido { position: relative; z-index: 3; color: var(--color-blanco); text-align: center; }
+.tarjeta-contenido i { font-size: 2rem; margin-bottom: 8px; color: var(--color-arena); }
+.tarjeta-contenido span { font-weight: bold; letter-spacing: .5px; }
+
+/* 8. BANNERS */
+.banner-comercio { background: linear-gradient(135deg, #111, #333); color: white; margin: 20px 15px; padding: 25px 20px; border-radius: 15px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,.2); }
+.banner-comercio h3 { color: var(--color-secundario); margin-bottom: 10px; font-size: 1.3rem; display: flex; justify-content: center; align-items: center; gap: 8px; }
+.banner-comercio p { font-size: .9rem; margin-bottom: 15px; color: #ccc; }
+.btn-unirse { background: var(--color-whatsapp); color: white; border: none; padding: 12px 20px; border-radius: var(--radio-pill); font-weight: bold; font-size: 1rem; width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; cursor: pointer; transition: transform .2s; }
+.btn-unirse:active { transform: scale(.98); }
+
+/* 9. MAPA Y RESEÑA */
+.mapa-contenedor { width: 100%; height: 250px; background: #ddd; }
+.mapa-contenedor iframe { width: 100%; height: 100%; border: none; }
+.resena-tarjeta { background: var(--color-blanco); margin: -40px 15px 15px; padding: 20px; border-radius: var(--radio-md); box-shadow: 0 4px 10px rgba(0,0,0,.1); position: relative; z-index: 10; }
+.resena-tarjeta h2 { color: var(--color-primario); font-size: 1.4rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.resena-tarjeta p { font-size: .95rem; color: #555; line-height: 1.6; text-align: justify; }
+
+/* 10. BOTÓN GOOGLE */
+.btn-google { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; background: var(--color-blanco); color: var(--color-primario); border: 1.5px solid var(--color-primario); padding: 8px 16px; border-radius: var(--radio-pill); font-weight: 600; font-size: .88rem; transition: all .2s ease; }
+.btn-google:active { transform: scale(.97); background: var(--color-primario); color: white; }
+
+/* 11. BARRA DE ACCIONES */
+.barra-acciones { display: flex; justify-content: space-around; align-items: center; margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee; flex-wrap: wrap; gap: 8px; }
+.btn-accion { background: none; border: none; color: var(--color-primario); font-size: .9rem; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; font-weight: 600; }
+.btn-accion i { font-size: 1.3rem; color: var(--color-secundario); background: var(--color-arena); padding: 10px; border-radius: 50%; transition: transform var(--transicion); }
+.btn-accion:active i { transform: scale(.9); }
+.btn-accion.favorito-activo i { color: #e63946; background: #ffebee; }
+
+/* 12. PLAYAS */
+.leyenda-banderas { display: flex; flex-wrap: wrap; gap: 12px; font-size: .78rem; color: #666; margin-bottom: 14px; }
+.leyenda-banderas span { display: flex; align-items: center; gap: 5px; }
+.grid-playas { display: grid; gap: 12px; }
+.tarjeta-playa { background: var(--color-blanco); border-radius: var(--radio-md); padding: 15px; box-shadow: var(--sombra-media); border-top: 4px solid var(--color-secundario); }
+.playa-header { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+.playa-header h4 { color: var(--color-primario); font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
+.badge-bandera { padding: 4px 10px; border-radius: 20px; font-size: .75rem; font-weight: 700; display: flex; align-items: center; gap: 5px; }
+.b-verde { background: #e8f5e9; color: #2e7d32; }
+.b-amarilla { background: #fff8e1; color: #f57f17; }
+.b-roja { background: #ffebee; color: #c62828; }
+.playa-dato { font-size: .88rem; color: #555; line-height: 1.5; margin-bottom: 8px; display: flex; gap: 8px; align-items: flex-start; }
+.playa-dato i { color: var(--color-secundario); margin-top: 3px; }
+.playa-dato.tip { background: var(--color-arena); padding: 8px 10px; border-radius: 8px; color: #6b5d1f; }
+.playa-dato.tip i { color: #b8860b; }
+
+/* 13. MODAL QR */
+.modal-qr { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.7); align-items: center; justify-content: center; z-index: 200; overflow-y: auto; padding: 20px 0; }
+.modal-qr.activo { display: flex; }
+.contenido-qr { background: white; padding: 25px; border-radius: var(--radio-lg); text-align: center; max-width: 380px; width: 92%; margin: auto; }
+.contenido-qr canvas { width: min(100%, 320px); height: auto; display: block; margin: 12px auto; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,.18); }
+.btn-cerrar-qr { background: var(--color-primario); color: white; border: none; padding: 10px 25px; border-radius: var(--radio-pill); font-weight: bold; cursor: pointer; margin-top: 10px; }
+
+/* 14. LISTAS Y COMERCIOS */
+.lista-lugares { padding: 20px 15px; }
+.lista-lugares h3, .directorio-seccion h3 { font-size: 1.2rem; margin-bottom: 15px; color: var(--color-texto); border-bottom: 2px solid var(--color-primario); padding-bottom: 5px; display: inline-block; }
+.tarjeta-lugar { background: var(--color-blanco); border-radius: var(--radio-md); padding: 15px; margin-bottom: 15px; box-shadow: var(--sombra-media); display: flex; flex-direction: column; gap: 10px; border-left: 4px solid var(--color-secundario); }
+.tarjeta-lugar h4 { color: var(--color-primario); font-size: 1.1rem; }
+.tarjeta-lugar p { font-size: .9rem; color: #555; line-height: 1.4; }
+.directorio-seccion { padding: 20px 15px; }
+.tarjeta-comercio { background: var(--color-blanco); border-radius: var(--radio-md); padding: 15px; margin-bottom: 15px; box-shadow: var(--sombra-media); border-left: 4px solid var(--color-secundario); }
+.comercio-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+.comercio-nombre { font-size: 1.1rem; font-weight: bold; color: var(--color-primario); }
+.comercio-precio { background: #e8f5e9; color: var(--color-exito); padding: 4px 8px; border-radius: 6px; font-weight: bold; font-size: .9rem; }
+.comercio-desc { font-size: .9rem; color: #555; margin-bottom: 12px; }
+.btn-contacto { display: inline-flex; justify-content: center; align-items: center; gap: 8px; background: var(--color-whatsapp); color: white; padding: 8px 15px; border-radius: var(--radio-sm); font-size: .9rem; font-weight: bold; width: 100%; }
+
+/* 15. TAGS */
+.servicios-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag { background: var(--color-arena); color: var(--color-primario); padding: 6px 12px; border-radius: 20px; font-size: .8rem; font-weight: bold; display: flex; align-items: center; gap: 5px; border: 1px solid #e9e5c4; }
+
+/* 16. CARRUSEL */
+.carrusel-contenedor { position: relative; width: 100%; height: 35vh; background: #ddd; }
+.carrusel-slides { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; height: 100%; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.carrusel-slides::-webkit-scrollbar { display: none; }
+.slide { flex: 0 0 100%; height: 100%; scroll-snap-align: start; background-size: cover; background-position: center; }
+.btn-carrusel { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,.5); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; z-index: 10; display: flex; justify-content: center; align-items: center; }
+.btn-prev { left: 10px; } .btn-next { right: 10px; }
+
+/* 17. ZONA QR */
+.zona-qr { text-align: center; padding: 20px 15px 40px; }
+.btn-qr { background: var(--color-texto); color: var(--color-arena); border: none; padding: 15px 20px; border-radius: 10px; font-size: 1rem; font-weight: bold; cursor: pointer; width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 4px 6px rgba(0,0,0,.2); }
+.btn-qr:active { transform: scale(.98); }
+
+/* 18. TOAST */
+#monba-toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); background: var(--color-texto); color: var(--color-arena); padding: 10px 18px; border-radius: var(--radio-pill); font-size: .9rem; font-weight: 600; opacity: 0; pointer-events: none; transition: all .3s ease; z-index: 9998; box-shadow: var(--sombra-alta); max-width: 90%; text-align: center; }
+#monba-toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* 19. ESTADOS */
+.estado-pantalla { text-align: center; padding: 50px 20px; color: #666; }
+.estado-pantalla p { margin-top: 15px; }
+
+/* 20. FOOTER */
+.monba-footer { background: var(--color-primario); color: white; text-align: center; padding: 20px 15px; font-size: .8rem; line-height: 1.6; margin-top: 20px; }
+.monba-footer .firma { color: var(--color-arena); font-weight: 700; }
+
+/* 21. FEED ESTÉTICO */
+#feed-dinamico { display: grid; gap: 15px; }
+#feed-dinamico .tarjeta-lugar { background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border: none; border-left: 5px solid var(--color-secundario); border-radius: 15px; padding: 18px; box-shadow: 0 4px 15px rgba(0,0,0,.08); transition: all .3s cubic-bezier(.4,0,.2,1); position: relative; overflow: hidden; }
+#feed-dinamico .tarjeta-lugar::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--color-primario), var(--color-secundario)); transform: scaleX(0); transform-origin: left; transition: transform .3s ease; }
+#feed-dinamico .tarjeta-lugar:hover::before { transform: scaleX(1); }
+#feed-dinamico .tarjeta-lugar:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,119,182,.15); }
+#feed-dinamico .tarjeta-lugar h4 { color: var(--color-primario); font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+#feed-dinamico .tarjeta-lugar h4::before { content: '✦'; color: var(--color-secundario); font-size: 1rem; }
+#feed-dinamico .tarjeta-lugar p { font-size: .95rem; color: #666; line-height: 1.5; margin: 8px 0; }
+#feed-dinamico .servicios-tags { margin-top: 12px; gap: 6px; }
+#feed-dinamico .tag { background: linear-gradient(135deg, #fefae0 0%, #faedcd 100%); padding: 5px 12px; font-size: .8rem; font-weight: 600; transition: all .2s ease; }
+#feed-dinamico .tag:hover { background: var(--color-primario); color: white; transform: scale(1.05); }
+
+/* 22. PWA BANNER */
+#pwa-banner { position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-secundario) 100%); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; gap: 15px; z-index: 9997; box-shadow: 0 -2px 10px rgba(0,0,0,.2); animation: slideUp .5s cubic-bezier(.4,0,.2,1); }
+@keyframes slideUp { from{transform:translateY(100%);opacity:0} to{transform:translateY(0);opacity:1} }
+#pwa-banner strong { display: flex; align-items: center; gap: 8px; font-size: 1rem; }
+#pwa-banner strong::before { content: '📱'; font-size: 1.2rem; }
+#pwa-banner p { font-size: .85rem; margin-top: 5px; opacity: .9; }
+#btn-instalar-pwa { background: white; color: var(--color-primario); border: none; padding: 12px 20px; border-radius: 25px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,.2); transition: all .3s ease; }
+#btn-instalar-pwa:hover { transform: translateY(-2px); }
+#btn-cerrar-pwa { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; padding: 5px; }
+
+/* 23. FAVORITOS VACÍO */
+.favoritos-vacio { text-align: center; padding: 50px 20px; color: #999; }
+.favoritos-vacio i { font-size: 4rem; margin-bottom: 15px; color: #ddd; }
+
+/* 24. RESPONSIVO TOTAL */
+@media (max-width: 359px) {
+    header h1 { font-size: 1.05rem; }
+    .hero-contenido h2 { font-size: 1.7rem; }
+    .btn-accion { font-size: .78rem; }
+    .btn-menu, .btn-volver, .btn-favoritos-header { width: 38px; height: 38px; }
+}
+@media (min-width: 600px) {
+    .grid-categorias { grid-template-columns: repeat(4, 1fr); }
+    #feed-dinamico { grid-template-columns: 1fr 1fr; }
+    .grid-playas { grid-template-columns: 1fr 1fr; }
+    .hero-home { height: 40vh; }
+}
+@media (min-width: 900px) {
+    header { padding-inline: max(20px, calc((100vw - 960px) / 2)); }
+    main { max-width: 960px; margin: 0 auto; }
+    .seccion, .banner-comercio { max-width: 920px; margin: 20px auto; }
+    .resena-tarjeta { max-width: 920px; margin: -40px auto 20px; }
+    .lista-lugares, .directorio-seccion { max-width: 920px; margin: 20px auto; }
+    #feed-dinamico { grid-template-columns: repeat(3, 1fr); }
+    .grid-playas { grid-template-columns: repeat(3, 1fr); }
+    .hero-home { height: 45vh; }
+    .bandeja-lateral { max-width: 380px; }
+}
+@media (min-width: 1200px) {
+    main { max-width: 1100px; }
+    .seccion, .banner-comercio, .resena-tarjeta, .lista-lugares, .directorio-seccion { max-width: 1060px; }
+}

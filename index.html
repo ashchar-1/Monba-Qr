@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monbá QR - Descubre Barlovento</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0077b6">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="splash-screen">
+        <i class="fa-solid fa-qrcode splash-logo"></i>
+        <div class="splash-texto">Monbá QR</div>
+        <div class="splash-sub">La Guía de Barlovento</div>
+    </div>
+
+    <header>
+        <div class="header-izq">
+            <button class="btn-menu" data-action="abrir-bandeja" title="Menú"><i class="fa-solid fa-bars"></i></button>
+            <h1>Monbá QR</h1>
+        </div>
+        <a href="favoritos.html" class="btn-favoritos-header" title="Mis favoritos"><i class="fa-regular fa-heart"></i></a>
+    </header>
+
+    <div id="overlay" class="overlay-bandeja" data-action="cerrar-bandeja"></div>
+    <div id="bandeja" class="bandeja-lateral">
+        <div class="bandeja-header">
+            <h2><i class="fa-solid fa-map-location-dot"></i> Explorar Región</h2>
+            <button class="btn-menu" data-action="cerrar-bandeja"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="bandeja-contenido">
+            <a href="municipio.html?id=pedro-gual" class="item-municipio">Municipio Pedro Gual <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="municipio.html?id=paez" class="item-municipio">Municipio Páez <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="municipio.html?id=brion" class="item-municipio">Municipio Brión <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="municipio.html?id=andres-bello" class="item-municipio">Mun. Andrés Bello <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="municipio.html?id=buroz" class="item-municipio">Municipio Buroz <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="municipio.html?id=acevedo" class="item-municipio">Municipio Acevedo <i class="fa-solid fa-chevron-right"></i></a>
+            <hr style="margin:15px 0;border:none;border-top:2px solid #e0e0e0;">
+            <a href="proyectos.html" class="item-municipio" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);"><i class="fa-solid fa-graduation-cap" style="color:#2e7d32;"></i> Proyectos Académicos</a>
+            <a href="favoritos.html" class="item-municipio" style="background:linear-gradient(135deg,#ffebee,#ffcdd2);"><i class="fa-solid fa-heart" style="color:#e53935;"></i> Mis Favoritos</a>
+            <a href="#" class="item-municipio" data-action="instalar" style="background:linear-gradient(135deg,#e3f2fd,#bbdefb);"><i class="fa-solid fa-mobile-screen" style="color:#0077b6;"></i> Instalar la app</a>
+        </div>
+    </div>
+
+    <main>
+        <div class="hero-home" style="background-image:url('https://images.unsplash.com/photo-1596422846543-74c6fc11a8c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');">
+            <div class="hero-capa"></div>
+            <div class="hero-contenido">
+                <h2>Descubre<br>Barlovento</h2>
+                <p>Playas, ríos, cultura y gastronomía a un toque de distancia.</p>
+            </div>
+        </div>
+
+        <!-- ============ POR AHORA OCULTO: "¿QUÉ BUSCAS HOY?" ============
+        <div class="seccion">
+            <h2><i class="fa-solid fa-compass"></i> ¿Qué buscas hoy?</h2>
+            <div class="grid-categorias">
+                <a href="#" class="btn-categoria" data-action="abrir-bandeja"><i class="fa-solid fa-umbrella-beach"></i> Playas</a>
+                <a href="#" class="btn-categoria" data-action="abrir-bandeja"><i class="fa-solid fa-utensils"></i> Dónde Comer</a>
+                <a href="#" class="btn-categoria" data-action="abrir-bandeja"><i class="fa-solid fa-bed"></i> Posadas</a>
+                <a href="#" class="btn-categoria" data-action="abrir-bandeja"><i class="fa-solid fa-route"></i> Rutas</a>
+            </div>
+        </div>
+        ================================================================ -->
+
+        <div class="seccion">
+            <h2><i class="fa-solid fa-fire" style="color:#ff6b35;"></i> Destacados para ti</h2>
+            <div id="feed-dinamico">
+                <p style="text-align:center;color:#999;padding:30px;font-style:italic;">
+                    <i class="fa-solid fa-spinner fa-spin" style="font-size:2rem;margin-bottom:10px;display:block;"></i>
+                    Cargando recomendaciones...
+                </p>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h2><i class="fa-solid fa-graduation-cap" style="color:#2e7d32;"></i> Proyectos de la Universidad</h2>
+            <p style="color:#666;font-size:.95rem;margin-bottom:15px;line-height:1.5;">Conoce los proyectos innovadores de tus compañeros de otros trayectos.</p>
+            <a href="proyectos.html" class="btn-unirse" style="text-decoration:none;display:inline-flex;justify-content:center;"><i class="fa-solid fa-arrow-right"></i> Ver todos los proyectos</a>
+        </div>
+
+        <div class="banner-comercio">
+            <h3><i class="fa-solid fa-store"></i> ¿Tienes un negocio en la zona?</h3>
+            <p>Digitaliza tu menú o catálogo de servicios. Llega a miles de turistas sin imprimir papel.</p>
+            <a href="https://wa.me/584260557902?text=Hola,%20quiero%20afiliar%20mi%20negocio%20a%20Monbá%20QR" target="_blank" class="btn-unirse"><i class="fa-brands fa-whatsapp"></i> Unir mi comercio</a>
+        </div>
+    </main>
+
+    <footer class="monba-footer">© <span data-anio></span> Monbá QR · Directorio Turístico de Barlovento<br>Diseño y desarrollo: <span class="firma">Luis Alejandro Hernández Rada</span></footer>
+
+    <script src="app.js"></script>
+    <script>
+        const itemsFeed = [
+            { id: "boca-uchire", titulo: "Playa Boca de Uchire", descripcion: "Atardeceres dorados y brisa constante en el municipio Buroz.", url: "municipio.html?id=buroz", tags: ["Playa", "Buroz"] },
+            { id: "ruta-cacao", titulo: "Ruta del Cacao", descripcion: "La tradición cacaotera de Caucagua, el oro marrón de Barlovento.", url: "proyectos.html", tags: ["Cultura", "Cacao"] },
+            { id: "higuerote", titulo: "Higuerote, mar tipo piscina", descripcion: "Aguas mansas, bandera verde y el tambor de Curiepe muy cerca.", url: "municipio.html?id=brion", tags: ["Playa", "Brión"] }
+        ];
+        document.addEventListener("DOMContentLoaded", () => setTimeout(() => generarFeedRandom("#feed-dinamico", itemsFeed, 3), 800));
+    </script>
+</body>
+</html>

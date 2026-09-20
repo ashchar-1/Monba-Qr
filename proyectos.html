@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyectos Académicos - Monbá QR</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header><a href="index.html" class="btn-volver"><i class="fa-solid fa-arrow-left"></i></a><h1>Proyectos Académicos</h1></header>
+    <main id="contenido-proyectos" style="display: none;">
+        <div class="seccion" style="margin: 15px;"><h2><i class="fa-solid fa-graduation-cap"></i> Vitrina de Proyectos</h2><p style="color: #666; font-size: 0.9rem; margin-bottom: 15px;">Proyectos de estudiantes de la UNESR/PTU y otras instituciones de Barlovento.</p></div>
+        <div id="lista-proyectos" style="padding: 15px;"></div>
+    </main>
+    <div id="mensaje-estado" class="estado-pantalla"><i class="fa-solid fa-spinner fa-spin fa-2x"></i><p>Cargando proyectos...</p></div>
+    <footer class="monba-footer">© <span data-anio></span> Monbá QR · Directorio Turístico de Barlovento<br>Diseño y desarrollo: <span class="firma">Luis Alejandro Hernández Rada</span></footer>
+    <script src="app.js"></script><script src="proyectos.js"></script>
+</body>
+</html>

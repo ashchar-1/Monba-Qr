@@ -1,0 +1,29 @@
+{
+  "id": "/",
+  "name": "Monbá QR - Descubre Barlovento",
+  "short_name": "Monbá QR",
+  "description": "Directorio turístico, cultural y académico de la región de Barlovento, estado Miranda.",
+  "lang": "es",
+  "dir": "ltr",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0077b6",
+  "theme_color": "#0077b6",
+  "categories": ["travel", "lifestyle", "education"],
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

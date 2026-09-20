@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monbá QR - Directorio</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header><button onclick="history.back()" class="btn-volver"><i class="fa-solid fa-arrow-left"></i></button><h1 id="titulo-header">Cargando...</h1></header>
+    <main id="contenido-principal" style="display: none;">
+        <div id="vista-detalle" style="display: none;">
+            <div class="carrusel-contenedor"><button class="btn-carrusel btn-prev" onclick="moverCarrusel(-1)"><i class="fa-solid fa-chevron-left"></i></button><button class="btn-carrusel btn-next" onclick="moverCarrusel(1)"><i class="fa-solid fa-chevron-right"></i></button><div class="carrusel-slides" id="carrusel-imagenes"></div></div>
+            <div class="info-seccion seccion"><h2 id="lugar-nombre"></h2><div class="ubicacion" style="color: #777; font-size: 0.9rem; margin-bottom: 15px; display: flex; align-items: center; gap: 5px;"><i class="fa-solid fa-location-dot"></i> <span id="lugar-ubicacion"></span></div><p class="descripcion" id="lugar-descripcion" style="font-size: 0.95rem; line-height: 1.6; text-align: justify; margin-bottom: 15px;"></p><div class="servicios-tags" id="contenedor-servicios"></div><div class="barra-acciones"><button class="btn-accion" id="btn-ruta" data-action="ruta"><i class="fa-solid fa-route"></i> Ruta</button><button class="btn-accion" data-action="compartir" data-titulo="Monbá QR" data-texto="¡Mira este destino!"><i class="fa-solid fa-share-nodes"></i> Compartir</button><button class="btn-accion" data-action="ver-qr"><i class="fa-solid fa-qrcode"></i> Ver QR</button><button class="btn-accion" data-action="fav"><i class="fa-regular fa-heart"></i> Favorito</button></div></div>
+            <div class="directorio-seccion"><h3>Directorio Comercial & Precios</h3><div id="contenedor-comercios"></div></div>
+        </div>
+        <div id="vista-lista" style="display: none;"><div class="lista-lugares"><h3 id="titulo-lista">Lugares encontrados</h3><div id="contenedor-lista"></div></div></div>
+        <div class="banner-comercio" id="banner-restaurante"><a href="#" id="enlace-restaurante" style="color: white; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px;"><i class="fa-solid fa-utensils"></i> ¿Antojo de algo especial? Descubre los mejores restaurantes <i class="fa-solid fa-arrow-right"></i></a></div>
+    </main>
+    <div id="mensaje-estado" class="estado-pantalla"><i class="fa-solid fa-spinner fa-spin fa-2x"></i><p>Cargando directorio...</p></div>
+    <footer class="monba-footer">© <span data-anio></span> Monbá QR · Directorio Turístico de Barlovento<br>Diseño y desarrollo: <span class="firma">Luis Alejandro Hernández Rada</span></footer>
+    <script src="app.js"></script><script src="directorio.js"></script>
+</body>
+</html>

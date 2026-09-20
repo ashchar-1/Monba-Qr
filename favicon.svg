@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Fondo cian de marca -->
+  <rect width="512" height="512" fill="#00A6C0"/>
+  <!-- ============ 3 FINDERS DE QR (hueco transparente) ============ -->
+  <!-- Superior izquierdo -->
+  <path fill="#F7FBFC" fill-rule="evenodd" d="&#xA;    M115,80 h80 a35,35 0 0 1 35,35 v80 a35,35 0 0 1 -35,35 h-80 a35,35 0 0 1 -35,-35 v-80 a35,35 0 0 1 35,-35 Z&#xA;    M130,130 h50 v50 h-50 Z"/>
+  <!-- Superior derecho -->
+  <path fill="#F7FBFC" fill-rule="evenodd" d="&#xA;    M317,80 h80 a35,35 0 0 1 35,35 v80 a35,35 0 0 1 -35,35 h-80 a35,35 0 0 1 -35,-35 v-80 a35,35 0 0 1 35,-35 Z&#xA;    M332,130 h50 v50 h-50 Z"/>
+  <!-- Inferior izquierdo -->
+  <path fill="#F7FBFC" fill-rule="evenodd" d="&#xA;    M115,282 h80 a35,35 0 0 1 35,35 v80 a35,35 0 0 1 -35,35 h-80 a35,35 0 0 1 -35,-35 v-80 a35,35 0 0 1 35,-35 Z&#xA;    M130,332 h50 v50 h-50 Z"/>
+  <!-- ============ MARCA INFERIOR DERECHA (UNIÓN LISADA) ============ -->
+  <!-- 1. Barra izquierda: 3 esquinas redondeadas, superior derecha FUNDIDA -->
+  <path fill="#F7FBFC" d="&#xA;    M296,282 h31 v136 q0,14 -14,14 h-17 q-14,0 -14,-14 v-122 q0,-14 14,-14 Z"/>
+  <!-- 2. Cuerpo: se solapa 7px dentro de la barra (adiós muesca) -->
+  <path fill="#F7FBFC" d="&#xA;    M320,282&#xA;    h26 v10 q0,16 16,16 h24 q16,0 16,-16 v-10&#xA;    h16 q14,0 14,14&#xA;    v68 q0,14 -14,14&#xA;    h-98&#xA;    Z"/>
+  <!-- 3. Lengua cian (el arco) mordiendo desde abajo -->
+  <path fill="#00A6C0" d="M327,432 v-64 q0,-16 15,-16 q15,0 15,16 v64 Z"/>
+  <!-- 4. Los dos puntos -->
+  <circle cx="368" cy="416" r="12" fill="#F7FBFC"/>
+  <circle cx="417" cy="416" r="12" fill="#F7FBFC"/>
+</svg>

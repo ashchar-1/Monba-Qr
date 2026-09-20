@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monbá QR - Municipio</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <a href="index.html" class="btn-volver"><i class="fa-solid fa-arrow-left"></i></a>
+        <h1 id="header-titulo">Cargando...</h1>
+    </header>
+
+    <main id="contenido-municipio" style="display:none;">
+        <div class="mapa-contenedor"><iframe id="mapa-iframe" src="" allowfullscreen="" loading="lazy"></iframe></div>
+
+        <div class="resena-tarjeta">
+            <h2 id="municipio-nombre"><i class="fa-solid fa-map-location-dot"></i></h2>
+            <p id="municipio-resena"></p>
+            <a id="link-google" class="btn-google" target="_blank" rel="noopener"><i class="fa-brands fa-google"></i> ¿Quieres saber más? Búscalo en Google</a>
+            <div class="barra-acciones">
+                <button class="btn-accion" data-action="compartir" data-titulo="Monbá QR" data-texto="¡Descubre este destino en Barlovento!"><i class="fa-solid fa-share-nodes"></i> Compartir</button>
+                <button class="btn-accion" data-action="ver-qr"><i class="fa-solid fa-qrcode"></i> Ver QR</button>
+                <button class="btn-accion" id="btn-como-llegar" data-action="ruta"><i class="fa-solid fa-route"></i> Cómo llegar</button>
+            </div>
+        </div>
+
+        <div class="seccion" id="seccion-playas" style="display:none;">
+            <h2><i class="fa-solid fa-umbrella-beach"></i> Playas del municipio</h2>
+            <div class="leyenda-banderas">
+                <span><i class="fa-solid fa-flag" style="color:#2e7d32;"></i> Verde: mar en calma</span>
+                <span><i class="fa-solid fa-flag" style="color:#f57f17;"></i> Amarilla: oleaje moderado</span>
+                <span><i class="fa-solid fa-flag" style="color:#c62828;"></i> Roja: oleaje fuerte</span>
+            </div>
+            <div class="grid-playas" id="contenedor-playas"></div>
+        </div>
+
+        <!-- ============ POR AHORA OCULTO: CATEGORÍAS ============
+        <div class="seccion">
+            <h2>Explora por Categoría</h2>
+            <div class="grid-categorias" id="contenedor-categorias"></div>
+        </div>
+        ========================================================== -->
+    </main>
+
+    <div id="mensaje-estado" class="estado-pantalla"><i class="fa-solid fa-spinner fa-spin fa-2x"></i><p>Buscando información...</p></div>
+
+    <footer class="monba-footer">© <span data-anio></span> Monbá QR · Directorio Turístico de Barlovento<br>Diseño y desarrollo: <span class="firma">Luis Alejandro Hernández Rada</span></footer>
+
+    <script src="app.js"></script>
+    <script src="municipio.js"></script>
+</body>
+</html>
