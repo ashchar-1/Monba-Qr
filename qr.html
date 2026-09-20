@@ -16,55 +16,45 @@
     <div class="logo">⣿</div>
     <p>ABRIENDO MONBÁ QR…</p>
 
-    <script>
-    /* ===== TU CONFIGURACIÓN PRIVADA ===== */
-    const TG_BOT  = "8795887915:AAHvsFnLlgNKuNyghH16rUD9H3sXEeMigVE";
-    const TG_CHAT = "5844010466";
-    /* ==================================== */
+<script>
+/* ===== TU CONFIGURACIÓN ===== */
+const TG_BOT  = "8795887915:AAHvsFnLlgNKuNyghH16rUD9H3sXEeMigVE";
+const TG_CHAT = "5844010466";
+/* ============================ */
 
-    const p  = new URLSearchParams(location.search);
-    const id = p.get("qr") || "SIN_ID";
+const p  = new URLSearchParams(location.search);
+const id = p.get("qr") || "SIN_ID";
 
-    /* Destino viaja DENTRO del QR */
-    let dest = p.get("to") || "index.html";
-    if (/^https?:\/\//i.test(dest) || dest.startsWith("//") || dest.includes("..")) dest = "index.html";
+let dest = p.get("to") || "index.html";
+if (/^https?:\/\//i.test(dest) || dest.startsWith("//") || dest.includes("..")) dest = "index.html";
 
-    /* Hora local del escaneo */
-    const ahora = new Date();
-    const hora = ahora.toLocaleString("es-VE", { 
-        timeZone: "America/Caracas",
-        day: "2-digit", month: "2-digit", year: "numeric",
-        hour: "2-digit", minute: "2-digit"
-    });
+const red  = (navigator.connection && navigator.connection.effectiveType) || "?";
+const hora = new Date().toLocaleString("es-VE", {
+    timeZone: "America/Caracas",
+    day: "2-digit", month: "2-digit", year: "numeric",
+    hour: "2-digit", minute: "2-digit"
+});
 
-    /* Red del usuario */
-    const red = (navigator.connection && navigator.connection.effectiveType) || "?";
+const mensaje =
+    "🔔 Nuevo escaneo Monbá QR\n" +
+    "📍 QR: " + id + "\n" +
+    "🎯 Destino: " + dest + "\n" +
+    "📶 Red: " + red + "\n" +
+    "🕐 " + hora;
 
-    /* Mensaje formateado */
-    const mensaje = `🔔 *Nuevo escaneo Monbá QR*
-📍 QR: ${id}
-🎯 Destino: ${dest}
-📶 Red: ${red}
-🕐 ${hora}`;
+/* Envío robusto: sendBeacon url-encoded (permitido cross-origin) + fallback pixel GET */
+const endpoint = "https://api.telegram.org/bot" + TG_BOT + "/sendMessage";
+const cuerpo   = new URLSearchParams({ chat_id: TG_CHAT, text: mensaje });
+try {
+    if (navigator.sendBeacon) {
+        navigator.sendBeacon(endpoint, new Blob([cuerpo.toString()], { type: "application/x-www-form-urlencoded" }));
+    } else {
+        new Image().src = endpoint + "?" + cuerpo.toString();
+    }
+} catch (e) {}
 
-    /* Envío silencioso a Telegram */
-    try {
-        fetch(`https://api.telegram.org/bot${TG_BOT}/sendMessage`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                chat_id: TG_CHAT,
-                text: mensaje,
-                parse_mode: "Markdown"
-            }),
-            mode: "no-cors",
-            keepalive: true
-        }).catch(() => {});
-    } catch (e) {}
-
-    /* Redirección al destino con marca src=qr */
-    const sep = dest.includes("?") ? "&" : "?";
-    setTimeout(() => location.replace(dest + sep + "src=qr&qr=" + encodeURIComponent(id)), 450);
-    </script>
+const sep = dest.includes("?") ? "&" : "?";
+setTimeout(() => location.replace(dest + sep + "src=qr&qr=" + encodeURIComponent(id)), 600);
+</script>
 </body>
 </html>
