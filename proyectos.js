@@ -6,8 +6,22 @@ const proyectosDB = [
 
 function cargarProyectos() {
     const contenedor = $("#lista-proyectos"); const estado = $("#mensaje-estado");
-    contenedor.innerHTML = proyectosDB.map(p => `<div class="tarjeta-lugar"><div style="display: flex; gap: 15px;"><div style="width: 100px; height: 100px; background-image: url('${p.imagen}'); background-size: cover; background-position: center; border-radius: 8px; flex-shrink: 0;"></div><div style="flex: 1;"><h4 style="color: var(--color-primario); margin-bottom: 5px;">${p.titulo}</h4><p style="font-size: 0.85rem; color: #666; margin-bottom: 5px;"><i class="fa-solid fa-user-graduate"></i> ${p.autor}</p><p style="font-size: 0.9rem; color: #555; line-height: 1.4;">${p.descripcion}</p><div class="servicios-tags" style="margin-top: 8px;">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div></div></div></div>`).join('');
+    contenedor.innerHTML = proyectosDB.map(p => `
+        <div class="tarjeta-lugar">
+            <button class="btn-fav-mini" data-action="fav" data-fav-id="proyecto-${p.id}" data-fav-titulo="${p.titulo}" data-fav-url="proyectos.html" title="Guardar proyecto">
+                <i class="fa-regular fa-heart"></i>
+            </button>
+            <div style="display: flex; gap: 15px;">
+                <div style="width: 100px; height: 100px; background-image: url('${p.imagen}'); background-size: cover; background-position: center; border-radius: 8px; flex-shrink: 0;"></div>
+                <div style="flex: 1;">
+                    <h4 style="color: var(--color-primario); margin-bottom: 5px;">${p.titulo}</h4>
+                    <p style="font-size: 0.85rem; color: #666; margin-bottom: 5px;"><i class="fa-solid fa-user-graduate"></i> ${p.autor}</p>
+                    <p style="font-size: 0.9rem; color: #555; line-height: 1.4;">${p.descripcion}</p>
+                    <div class="servicios-tags" style="margin-top: 8px;">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+                </div>
+            </div>
+        </div>`).join('');
     estado.style.display = "none"; $("#contenido-proyectos").style.display = "block";
+    sincronizarFavoritos();
 }
 document.addEventListener("DOMContentLoaded", cargarProyectos);
-
