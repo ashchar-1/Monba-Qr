@@ -81,13 +81,29 @@ function cargarMunicipio() {
     $("#municipio-nombre").innerHTML = `<i class="fa-solid fa-map-location-dot"></i> ${m.nombre}`;
     $("#municipio-resena").textContent = m.resena;
     $("#mapa-iframe").src = m.mapaUrl;
-    $("#btn-como-llegar").dataset.maps = m.mapsNavegacion;
     $("#link-google").href = `https://www.google.com/search?q=${encodeURIComponent(m.busquedaGoogle)}`;
 
+    /* Botón cómo llegar (comentado por ahora): solo si existe */
+    const bl = $("#btn-como-llegar"); if (bl) bl.dataset.maps = m.mapsNavegacion;
+
+    /* Corazón flotante del municipio */
+    const bf = $("#btn-fav-municipio");
+    if (bf) {
+        bf.dataset.favId = "municipio-" + id;
+        bf.dataset.favTitulo = m.nombre;
+        bf.dataset.favUrl = "municipio.html?id=" + id;
+    }
+
+    /* Playas con corazoncito propio */
     if (m.playas && m.playas.length > 0) {
         $("#seccion-playas").style.display = "block";
-        $("#contenedor-playas").innerHTML = m.playas.map(p => `
+        $("#contenedor-playas").innerHTML = m.playas.map(p => {
+            const pid = "playa-" + id + "-" + p.nombre.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+            return `
             <div class="tarjeta-playa">
+                <button class="btn-fav-mini" data-action="fav" data-fav-id="${pid}" data-fav-titulo="${p.nombre}" data-fav-url="municipio.html?id=${id}" title="Guardar playa">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
                 <div class="playa-header">
                     <h4><i class="fa-solid fa-umbrella-beach"></i> ${p.nombre}</h4>
                     <span class="badge-bandera b-${p.bandera}"><i class="fa-solid fa-flag"></i> Bandera ${p.bandera}</span>
@@ -95,12 +111,13 @@ function cargarMunicipio() {
                 <p class="playa-dato"><i class="fa-solid fa-water"></i> <span><strong>Oleaje:</strong> ${p.oleaje}</span></p>
                 <p class="playa-dato"><i class="fa-solid fa-route"></i> <span><strong>Cómo llegar:</strong> ${p.comoLlegar}</span></p>
                 <p class="playa-dato tip"><i class="fa-solid fa-lightbulb"></i> <span>${p.tip}</span></p>
-            </div>
-        `).join("");
+            </div>`;
+        }).join("");
     }
 
     estado.style.display = "none";
     contenedor.style.display = "block";
+    sincronizarFavoritos();
 }
 
 document.addEventListener("DOMContentLoaded", cargarMunicipio);
