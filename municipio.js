@@ -281,7 +281,15 @@ function cargarMunicipio() {
                     <span class="badge-bandera b-${p.bandera}"><i class="fa-solid fa-flag"></i> Bandera ${p.bandera}</span>
                 </div>
                 <p class="playa-dato"><i class="fa-solid fa-water"></i> <span><strong>Oleaje:</strong> ${p.oleaje}</span></p>
-                <p class="playa-dato"><i class="fa-solid fa-route"></i> <span><strong>Cómo llegar:</strong> ${p.comoLlegar}</span></p>
+                
+                <!-- Botón/Enlace a Google Maps -->
+                <p class="playa-dato">
+                    <i class="fa-solid fa-location-dot"></i> 
+                    <a href="${p.comoLlegar}" target="_blank" rel="noopener noreferrer" class="btn-ruta-maps">
+                        Ver ruta en Google Maps <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </p>
+
                 <p class="playa-dato tip"><i class="fa-solid fa-lightbulb"></i> <span>${p.tip}</span></p>
             </div>`;
         }).join("");
