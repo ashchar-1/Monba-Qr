@@ -413,7 +413,7 @@ function cargarMunicipio() {
         bf.dataset.favUrl = "municipio.html?id=" + id;
     }
 
-    /* Playas con corazoncito propio */
+    /* Playas con corazoncito propio y control "Ver más" */
     if (m.playas && m.playas.length > 0) {
         $("#seccion-playas").style.display = "block";
         $("#contenedor-playas").innerHTML = m.playas.map(p => {
@@ -440,6 +440,35 @@ function cargarMunicipio() {
                 <p class="playa-dato tip"><i class="fa-solid fa-lightbulb"></i> <span>${p.tip}</span></p>
             </div>`;
         }).join("");
+
+        /* Lógica del colapsable "Ver más" */
+        const wrapper = $("#wrapper-playas");
+        const btnVerMas = $("#btn-ver-mas-playas");
+
+        if (wrapper && btnVerMas) {
+            wrapper.classList.remove("expandido");
+
+            if (m.playas.length > 2) {
+                btnVerMas.style.display = "block";
+                btnVerMas.innerHTML = 'Ver más <i class="fa-solid fa-chevron-down"></i>';
+
+                const nuevoBtn = btnVerMas.cloneNode(true);
+                btnVerMas.parentNode.replaceChild(nuevoBtn, btnVerMas);
+
+                nuevoBtn.addEventListener("click", () => {
+                    wrapper.classList.toggle("expandido");
+                    const expandido = wrapper.classList.contains("expandido");
+                    nuevoBtn.innerHTML = expandido 
+                        ? 'Ver menos <i class="fa-solid fa-chevron-up"></i>' 
+                        : 'Ver más <i class="fa-solid fa-chevron-down"></i>';
+                });
+            } else {
+                btnVerMas.style.display = "none";
+                wrapper.classList.add("expandido");
+            }
+        }
+    } else {
+        $("#seccion-playas").style.display = "none";
     }
 
     estado.style.display = "none";
