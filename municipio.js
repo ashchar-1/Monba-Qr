@@ -22,9 +22,181 @@ const municipiosDB = {
         busquedaGoogle: "Higuerote Brión playas Curiepe tambor turismo",
         resena: "Si Barlovento tuviera una postal, sería Higuerote: su malecón, sus toldos de coco y ese mar tranquilo como una piscina, hecho a la medida de los niños. Pero Brión también es el tambor que despierta en Curiepe cada San Juan, el oleaje bravo de Chirimena que reta a los surfistas y la fe de sus pescadores. Es el municipio donde el turismo se volvió casa, cocina y fiesta a la vez.",
         playas: [
-            { nombre: "Playa Higuerote", oleaje: "Manso, aguas tipo piscina", bandera: "verde", comoLlegar: "Desde el centro de Higuerote por la Av. Costanera; 5 min en carro o 20 min a pie.", tip: "El atardecer desde el malecón es imperdible." },
-            { nombre: "Playa Los Totumos", oleaje: "Manso con pozas poco profundas", bandera: "verde", comoLlegar: "Vía costera al este de Higuerote, unos 10 min en carro.", tip: "Ideal para niños pequeños por sus aguas tranquilas." },
-            { nombre: "Playa Chirimena", oleaje: "Fuerte, zona de surfistas", bandera: "roja", comoLlegar: "Desvío de la vía costera, unos 25 min desde Higuerote.", tip: "Si no surfeas, mira desde la arena: el espectáculo está garantizado." }
+            
+        
+  // --- BANDERA VERDE ---
+  {
+    nombre: "Playa Los Totumos",
+    oleaje: "Manso con pozas poco profundas",
+    bandera: "verde",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Los+Totumos+Higuerote",
+    tip: "Ideal para niños pequeños por sus aguas tranquilas."
+  },
+  {
+    nombre: "Playa de Buche",
+    oleaje: "Súper manso, piscina natural",
+    bandera: "verde",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Embarcadero+Carenero+Higuerote",
+    tip: "Se llega en peñero/lancha desde el embarcadero de Carenero o La Pérgola."
+  },
+  {
+    nombre: "Valle Seco",
+    oleaje: "Piscina natural muy serena",
+    bandera: "verde",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Valle+Seco+Higuerote",
+    tip: "Perfecta para relajarse sin olas y tomar fotos increíbles."
+  },
+  {
+    nombre: "Playa Cuchivano",
+    oleaje: "Suave a moderado",
+    bandera: "verde",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Cuchivano+Higuerote",
+    tip: "Muy cercana al pueblo de Higuerote, de fácil acceso terrestre."
+  },
+  {
+    nombre: "Playa Yaguarita",
+    oleaje: "Tranquilo y de aguas cristalinas",
+    bandera: "verde",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Yaguarita+Miranda",
+    tip: "Excelente opción para snorkel suave cerca de la orilla."
+  },
+  {
+    nombre: "Playa Majagua",
+    oleaje: "Manso y agua cristalina",
+    bandera: "verde",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Majagua+Miranda",
+    tip: "Acceso principal por vía marítima desde muelles locales."
+  },
+  {
+    nombre: "Playa Majaguita",
+    oleaje: "Sereno y cristalino",
+    bandera: "verde",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Majaguita+Miranda",
+    tip: "Una caleta íntima y poco concurrida, ideal para desconectarse."
+  },
+  {
+    nombre: "Playa Caracolito",
+    oleaje: "Muy tranquilo",
+    bandera: "verde",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Caracolito+Miranda",
+    tip: "Normalmente se accede en lancha desde Puerto Francés."
+  },
+  {
+    nombre: "San Francisquito",
+    oleaje: "Calmo y poco profundo",
+    bandera: "verde",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+San+Francisquito+Higuerote",
+    tip: "Ambiente muy acogedor cerca de Los Totumos."
+  },
+  {
+    nombre: "Playa Escondida",
+    oleaje: "Manso y recogido",
+    bandera: "verde",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Escondida+Los+Totumos",
+    tip: "Un rincón tranquilo muy cerca del sector Los Totumos."
+  },
+  {
+    nombre: "La Playita",
+    oleaje: "Tranquilo",
+    bandera: "verde",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=La+Playita+Higuerote",
+    tip: "Pequeña franja de playa ideal para un baño rápido."
+  },
+  {
+    nombre: "Mono Manso",
+    oleaje: "Manso",
+    bandera: "verde",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Mono+Manso+Miranda",
+    tip: "Ensenada natural muy serena rodeada de vegetación."
+  },
+  {
+    nombre: "Indios",
+    oleaje: "Suave",
+    bandera: "verde",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Indios+Miranda",
+    tip: "Aguas pacíficas en el tramo costero hacia la zona este."
+  },
+  {
+    nombre: "Carenero",
+    oleaje: "Muy suave (zona de puerto/bahía)",
+    bandera: "verde",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Carenero+Higuerote",
+    tip: "Punto principal de partida de peñeros hacia otras playas."
+  },
+
+  // --- BANDERA AMARILLA ---
+  {
+    nombre: "Puerto Francés",
+    oleaje: "Moderado / Variable",
+    bandera: "amarilla",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Puerto+Frances+Higuerote",
+    tip: "Cuenta con gran variedad de servicios, estacionamiento y salida de peñeros."
+  },
+  {
+    nombre: "Playa Caribe",
+    oleaje: "Moderado",
+    bandera: "amarilla",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Caribe+Miranda",
+    tip: "Paisaje hermoso en el límite costero, tomar precauciones con el viento."
+  },
+  {
+    nombre: "Playa Esmeralda",
+    oleaje: "Moderado",
+    bandera: "amarilla",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Esmeralda+Miranda",
+    tip: "Agua de hermoso color verde esmeralda pero con movimiento."
+  },
+  {
+    nombre: "Petaquiritos",
+    oleaje: "Moderado con resaca",
+    bandera: "amarilla",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Petaquiritos+Miranda",
+    tip: "Zona rocosa pintoresca, nadar cerca de la orilla."
+  },
+  {
+    nombre: "Banquito",
+    oleaje: "Moderado",
+    bandera: "amarilla",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Banquito+Miranda",
+    tip: "Buen punto de parada si vas explorando la costa este."
+  },
+
+  // --- BANDERA ROJA ---
+  {
+    nombre: "Playa Chirimena",
+    oleaje: "Fuerte, zona de surfistas",
+    bandera: "roja",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Chirimena+Miranda",
+    tip: "Si no surfeas, mira desde la arena: el espectáculo está garantizado."
+  },
+  {
+    nombre: "Playa Chirere",
+    oleaje: "Muy fuerte, mar abierto",
+    bandera: "roja",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Chirere+Miranda",
+    tip: "Epicentro del surf regional y acampada con mucha precaución."
+  },
+  {
+    nombre: "Playa Corrales",
+    oleaje: "Fuerte con resaca",
+    bandera: "roja",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Corrales+Miranda",
+    tip: "Al lado de Chirimena; gran paisaje pero mar de cuidado."
+  },
+  {
+    nombre: "Cangrejera",
+    oleaje: "Fuerte y constante",
+    bandera: "roja",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Cangrejera+Miranda",
+    tip: "Costa virgen de mar abierto; ideal para caminar, no tanto para nadar."
+  },
+  {
+    nombre: "Playa Caimán",
+    oleaje: "Fuerte",
+    bandera: "roja",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Caiman+Miranda",
+    tip: "Zona expuesta al oleaje del Atlántico, extremar precauciones."
+  }
         ]
     },
     "acevedo": {
