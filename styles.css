@@ -271,3 +271,18 @@ header h1 { font-size: 1.3rem; font-weight: 700; letter-spacing: .5px; }
     font-size: 1rem; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.15);
 }
 .btn-fav-mini.favorito-activo { background: #e63946; color: #fff; }
+
+.btn-ruta-maps {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #0284c7;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.btn-ruta-maps:hover {
+    color: #0369a1;
+    text-decoration: underline;
+}
