@@ -286,3 +286,55 @@ header h1 { font-size: 1.3rem; font-weight: 700; letter-spacing: .5px; }
     color: #0369a1;
     text-decoration: underline;
 }
+/* Limitar altura para mostrar solo 1 o 2 tarjetas inicialmente */
+.wrapper-playas {
+    position: relative;
+    max-height: 380px; /* Ajusta según el tamaño de tus tarjetas */
+    overflow: hidden;
+    transition: max-height 0.4s ease; /* Animación suave */
+}
+
+/* Clase que se añade con JS para expandir */
+.wrapper-playas.expandido {
+    max-height: 3000px; /* Un valor alto para que entren todas las playas */
+}
+
+/* Efecto de difuminado (Sombreado) */
+.sombra-ver-mas {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    /* Cambia el rgb(255,255,255) por rgb(0,0,0) u otro si usas modo oscuro */
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+    pointer-events: none; /* Para que los clicks pasen a través de la sombra */
+    transition: opacity 0.3s ease;
+}
+
+/* Ocultar la sombra cuando está expandido */
+.wrapper-playas.expandido .sombra-ver-mas {
+    opacity: 0;
+}
+
+/* Estilos del botón Ver más */
+.btn-ver-mas {
+    display: block;
+    width: 100%;
+    margin-top: 15px;
+    padding: 12px;
+    background-color: transparent;
+    color: #0284c7;
+    border: 2px solid #0284c7;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-ver-mas:hover {
+    background-color: #0284c7;
+    color: white;
+}
