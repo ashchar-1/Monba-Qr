@@ -232,7 +232,103 @@ const municipiosDB = {
         busquedaGoogle: "Río Chico Páez Tacarigua de la Laguna turismo manglares",
         resena: "Río Chico vive de cara a la laguna: entre canales, garzas y botes que salen de madrugada a la faena. Páez es un municipio de agua —la laguna de Tacarigua, el río Tuy, sus manglares— y de una cocina que sabe a mar y a campo al mismo tiempo. Su gente conserva la calma de quien conoce los horarios de la marea de memoria.",
         playas: [
-            { nombre: "Costa de Tacarigua (mar y laguna)", oleaje: "Manso en zona lagunar; moderado en la barra del mar", bandera: "verde", comoLlegar: "Desde Río Chico toma la vía a Tacarigua de la Laguna (~25 min); hay paseos en bote hasta la costa.", tip: "Combina laguna y mar en un mismo día con los botes locales." }
+  // --- BANDERA VERDE ---
+  {
+    nombre: "Playa Paparo",
+    oleaje: "Suave / Calmo",
+    bandera: "verde",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Paparo+Rio+Chico",
+    tip: "Ubicada cerca de la desembocadura, de aguas muy mansas pero con sedimento natural."
+  },
+  {
+    nombre: "Laguna de Tacarigua (Boca)",
+    oleaje: "Súper calmo (Canal interior)",
+    bandera: "verde",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Laguna+de+Tacarigua+Miranda",
+    tip: "Ideal para paseos en peñero, avistamiento de aves y ambiente de parque nacional."
+  },
+  {
+    nombre: "Tacarigua de la Boca",
+    oleaje: "Tranquilo",
+    bandera: "verde",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Tacarigua+de+la+Boca+Miranda",
+    tip: "Poblado pesquero tradicional con excelente gastronomía marina local."
+  },
+
+  // --- BANDERA AMARILLA ---
+  {
+    nombre: "Redoma de Río Chico",
+    oleaje: "Moderado",
+    bandera: "amarilla",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Redoma+de+Rio+Chico+Miranda",
+    tip: "Punto de entrada principal a la franja playera de los canales de Río Chico."
+  },
+  {
+    nombre: "Playa Cristal",
+    oleaje: "Moderado",
+    bandera: "amarilla",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Cristal+Rio+Chico",
+    tip: "Amplia franja de arena ideal para caminatas y deportes playeros."
+  },
+  {
+    nombre: "Playa Daiquirí",
+    oleaje: "Moderado",
+    bandera: "amarilla",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Daiquiri+Rio+Chico",
+    tip: "Una de las más concurridas y familiares de la zona con alquiler de toldos."
+  },
+  {
+    nombre: "Caño Copey",
+    oleaje: "Moderado",
+    bandera: "amarilla",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Cano+Copey+Rio+Chico",
+    tip: "Ubicada cerca del paso de los canales, zona muy tranquila y amplia."
+  },
+  {
+    nombre: "Playa Linda",
+    oleaje: "Moderado",
+    bandera: "amarilla",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Linda+Rio+Chico",
+    tip: "Agradable para pasar el día en familia tomando precauciones en la orilla."
+  },
+  {
+    nombre: "Playa Limpia",
+    oleaje: "Moderado",
+    bandera: "amarilla",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Limpia+Rio+Chico",
+    tip: "Extensión de arena dorada muy abierta y tranquila."
+  },
+
+  // --- BANDERA ROJA ---
+  {
+    nombre: "Playa La Colada",
+    oleaje: "Fuerte / Mar abierto",
+    bandera: "roja",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+La+Colada+Rio+Chico",
+    tip: "Una de las playas más famosas de la zona, pero requiere cuidado por el oleaje."
+  },
+  {
+    nombre: "Puerto Tuy",
+    oleaje: "Fuerte y continuo",
+    bandera: "roja",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Puerto+Tuy+Rio+Chico",
+    tip: "Zona de mar abierto expuesta al viento en la franja costera de Río Chico."
+  },
+  {
+    nombre: "Playa El Raizal",
+    oleaje: "Fuerte con resaca",
+    bandera: "roja",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+El+Raizal+Rio+Chico",
+    tip: "Costa virgen muy expuesta; excelente para relajarse en la arena."
+  },
+  {
+    nombre: "Playa Puerto Plata",
+    oleaje: "Fuerte",
+    bandera: "roja",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Puerto+Plata+Rio+Chico",
+    tip: "Mar de cuidado, ideal para caminatas al atardecer."
+  }
+
         ]
     }
 };
