@@ -11,8 +11,59 @@ const municipiosDB = {
         mapsNavegacion: "https://www.google.com/maps/dir/?api=1&destination=10.1558,-65.7766",
         busquedaGoogle: "Cupira Pedro Gual turismo casabe Playa Machurucuto",
         resena: "Pedro Gual es la puerta de entrada a Barlovento: el pueblo que te recibe con olor a casabe recién hecho y cochino frito en la carretera nacional. En Cúpira la vida transcurre al ritmo de los viajeros que van hacia oriente, y a un paso del pueblo se abre Machurucuto, donde el río abraza al mar y los pescadores aún sacan la cena del día. Es un municipio de gente sencilla y trabajadora que convirtió la parada de carretera en todo un arte.",
-        playas: [
-            { nombre: "Playa Machurucuto", oleaje: "Moderado, ideal para caminar la orilla", bandera: "amarilla", comoLlegar: "Sobre la Troncal 9, unos 20 min después de Higuerote; desvío señalizado al caserío Machurucuto.", tip: "Prueba el pescado frito en los toldos de la desembocadura." }
+        playas: [ 
+  // --- BANDERA AMARILLA (Oleaje moderado, mar abierto apto para bañistas con precaución) ---
+  {
+    nombre: "Playa Machurucuto",
+    oleaje: "Moderado",
+    bandera: "amarilla",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Machurucuto+Miranda",
+    tip: "El principal centro poblado costero del municipio, con amplia tradición pesquera y gran extensión de arena."
+  },
+  {
+    nombre: "Playa Dorada",
+    oleaje: "Moderado",
+    bandera: "amarilla",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Dorada+Pedro+Gual",
+    tip: "Una de las playas más concurridas de la zona, ideal para pasar el día y disfrutar de la brisa."
+  },
+  {
+    nombre: "Playa Pintada",
+    oleaje: "Moderado",
+    bandera: "amarilla",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Pintada+Miranda",
+    tip: "Ubicada en el límite entre Miranda y Anzoátegui (cerca de Boca de Uchire), de acceso sencillo desde la Troncal 9."
+  },
+  {
+    nombre: "Playa Cocomar",
+    oleaje: "Moderado a continuo",
+    bandera: "amarilla",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Cocomar+Pedro+Gual",
+    tip: "Sector tranquilo y espacioso, excelente para caminatas a la orilla del mar."
+  },
+
+  // --- BANDERA ROJA (Mar abierto, corrientes y oleaje pronunciado) ---
+  {
+    nombre: "Playa Managua",
+    oleaje: "Fuerte / Mar abierto",
+    bandera: "roja",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Managua+Pedro+Gual",
+    tip: "Costa abierta con oleaje constante; tomar precauciones al ingresar al agua."
+  },
+  {
+    nombre: "Playa Guacuco",
+    oleaje: "Fuerte",
+    bandera: "roja",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Guacuco+Pedro+Gual",
+    tip: "Zona virgen y poco intervenida, ideal para desconectarse y observar el paisaje."
+  },
+  {
+    nombre: "Playa Bosque Mar",
+    oleaje: "Fuerte y continuo",
+    bandera: "roja",
+    comoLlegar: "https://www.google.com/maps/dir/?api=1&destination=Playa+Bosque+Mar+Pedro+Gual",
+    tip: "Franja de playa contigua a áreas residenciales/vacacionales, con viento y resaca constante."
+  }
         ]
     },
     "brion": {
