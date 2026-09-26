@@ -273,7 +273,7 @@ const municipiosDB = {
         busquedaGoogle: "Mamporal Buroz Boca de Uchire cacao playas turismo",
         resena: "Mamporal vive entre dos mundos: el cacao que perfuma sus haciendas y el mar que se abre en Boca de Uchire, donde el atardecer convierte el agua en oro. Buroz es tradición afrodescendiente, cocinas dulces y pescadores que todavía cuentan historias de la costa. Un municipio que se descubre despacio, como se saborea un buen chocolate.",
         playas: [
-            { nombre: "Playa Boca de Uchire", oleaje: "Moderado con brisa constante", bandera: "amarilla", comoLlegar: "Por la Troncal 9, unos 35 min después de Higuerote hacia oriente; entrada en el pueblo de Boca de Uchire.", tip: "Quédate al atardecer: es de los más hermosos de Barlovento." }
+        //    { nombre: "Playa Boca de Uchire", oleaje: "Moderado con brisa constante", bandera: "amarilla", comoLlegar: "Por la Troncal 9, unos 35 min después de Higuerote hacia oriente; entrada en el pueblo de Boca de Uchire.", tip: "Quédate al atardecer: es de los más hermosos de Barlovento." }
         ]
     },
     "paez": {
